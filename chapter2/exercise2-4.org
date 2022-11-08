@@ -1,0 +1,35 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-08 二 22:45
+
+练习2.4:
+
+下面是序对的另一种过程性表示方式。请针对这一表示验证，对于任意x和y，=(car (cons x y))= 都将产生出x：
+#+begin_src scheme
+  ;;; cons 的返回结果是一个过程，这个过程以另外一个接收两个参数(x, y)的过程为参数
+  (define (cons x y)
+    (λ (m) (m x y)))
+
+  ;;; car 的入参是一个过程，该过程以一个过程为参数。
+  (define (car z)
+    (z (λ (p q) p)))
+
+  ;;; 将(car (cons x y))进行代换，(λ (p q) p )过程作为参数传入到cons的返回结果中
+
+  (car (cons x y))
+  ;;; =>
+  (car (λ (m) (m x y)))
+
+  ;;; 传入cons 的m函数为 => (λ (p q) p)
+#+end_src
+
+对应的 =cdr= 应该如何定义？（提示，为了验证这一表示确定通行，请利用1.1.5节的代换模型）：
+#+begin_src scheme
+  (define (cons x y)
+    (λ (m) (m x y)))
+
+  (define (cdr z)
+    (z (λ (p q) q)))
+#+end_src
