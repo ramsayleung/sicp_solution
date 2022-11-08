@@ -1,0 +1,70 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-08 二 22:11
+练习2.2:
+
+请参考平面上线段的表示问题。一个线段用一对点表示，它们分别是线段的始点和终点。
+
+请定义构造函数 =make-segment= 和选择函数 =start-segment=，=end-segment=，它们基于点定义线段的表示。
+
+进而，一个点可以用数的序对表示，序对的两个成分分别表示点的x坐标与y坐标。请据此进一步给出构造函数 =make-point= 和选择函数 =x-point=，=y-point=，用它们定义出点的这种表示。
+
+最后，请基于所定义的构造函数和选择函数，定义出过程 =midpoint-segment=，它以一个线段为参数，返回线段的中点（也就是那个坐标值是两个端点的平均值的点）。
+
+为了试验这些过程，还需要定义一种打印点的方法：
+#+begin_src scheme
+  (define (print-point p)
+    (newline)
+    (display "(")
+    (display (x-point p))
+    (display ", ")
+    (display (y-point p))
+    (display ")")
+    (newline))
+#+end_src
+
+#+begin_src scheme
+  (define (average x y)
+    (/ (+ x y) 2))
+
+  (define (make-point x y)
+    (cons x y))
+
+  (define (x-point x)
+    (car x))
+
+  (define (y-point y)
+    (cdr y))
+
+  (define (midpoint point1 point2)
+    (make-point (average (x-point point1) (x-point point2))
+		(average (y-point point1) (y-point point2))))
+
+  (define(make-segment start-point end-point)
+    (cons start-point end-point)
+    )
+
+  (define (start-segment segment)
+    (car segment))
+
+  (define (end-segment segment)
+    (cdr segment))
+
+  (define (midpoint-segment segment)
+    (midpoint (start-segment segment) (end-segment segment)))
+
+  (define (print-point p)
+    (newline)
+    (display "(")
+    (display (x-point p))
+    (display ", ")
+    (display (y-point p))
+    (display ")")
+    (newline))
+
+  (define point-a (make-point 1 1))
+  (define point-b (make-point 3 3))
+  (define segment-a (make-segment point-a point-b))
+#+end_src
