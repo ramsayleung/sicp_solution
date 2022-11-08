@@ -1,0 +1,19 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-07 一 21:07
+* Structure and Interpretation of Computer Programs
+  《计算机程序的构造和解释》题解
+  
+  #+begin_quote
+  If art interprets our dreams, the computer executes them in the guise of programs!
+
+  如果说艺术解释了我们的梦想，那么计算机就是以程序的名义执行着它们
+  #+end_quote
+
+  #+begin_quote
+  We toast the Lisp programmer who pens his thoughts within nests of parentheses.
+  #+end_quote
+  
+  
