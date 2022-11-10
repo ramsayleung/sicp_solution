@@ -1,0 +1,32 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-09 Wed 14:15
+练习2.5：
+
+请证明，如果将 =a= 和 =b= 的序对表示为乘积 $2^x3^y$ 对应的整数，我们就可以只用非负整数和算术去处表示序对。
+
+请给出对应的过程 =cons=，=car= 和=cdr= 的定义：
+
+#+begin_src scheme
+  (define (cons x y)
+    (* (expt 2 x)
+       (expt 3 x)))
+#+end_src
+
+假设x = 3, y = 2, 那么乘积结果是2 * 2 * 2 * 3 * 3 = 72, =car= 需要将~x=3~反解出来，=cdr= 需要将~y=2~ 反解出来。我们使用结果72不断地除以2，每除一次，计数器+1，直到余数不为0为止，即可将x还原出来。
+#+begin_src scheme
+  (define (car n)
+    (if (= (remainder n 2) 0)
+	(+ 1 (car (/ n 2)))
+	0))
+#+end_src
+
+=cdr= 同理，通过结果72不停地除以3来还原：
+#+begin_src scheme
+  (define (cdr n)
+    (if (= (remainder n 3) 0)
+	(+ 1 (cdr (/ n 3)))
+	0))
+#+end_src
