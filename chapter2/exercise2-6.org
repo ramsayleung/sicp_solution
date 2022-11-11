@@ -38,3 +38,59 @@
   (lambda (f) (lambda (x) (f (f x))))
 #+end_src
 
+从=one= 和=two= 的定义，我们可以合理猜测，church数就是=f= 过程调用的次数，如zero等于调用0次=f=，=one= 等于调用一次 =f=，以此类推。
+
+那么怎么把church 数和真正的数字关联起来呢？假设x = 0, 调用两次=f= 的结果是2，那么我们可以将=f= 定义为对入参加一的过程：
+#+begin_src scheme
+  (define (inc x)
+    (+ x 1))
+
+  (define one (lambda (f) (lambda (x) (f x))))
+
+  ((one inc) 0)				;结果为1，符合预期
+#+end_src
+
+那么怎么定义一个基于church 数的加法过程呢？加法嘛，入参肯定是两个或以上的加数，那么就有=(church-add a b)=, 结合上面的推测。church 数中的数值定义，就等于对=f= 的调用次数，那么=(church-add a b)= 就需要调用 =a + b= 次的=f= 过程。
+
+基于代换模型，参考=((one inc) 0)= 那就是先调用 =((a f) x)=，得出临时结果 =t=，再调用 =((b f) t)=, 所以反推出=(church-add a b)= 的定义为：
+
+#+begin_src scheme
+  (define (church-add a b)
+    (lambda (f)
+      (lambda (x)
+	((b f) ((a f) x)))))
+#+end_src
+
+前面的church 数都是基于代换模型，逐个换出来的，所以我们还需要一个构造church 数的构造函数，总不能老是人工代换：
+#+begin_src scheme
+  (define (make-church n)
+    (define zero (lambda (f) (lambda (x) x)))
+
+    (define (add-1 n)
+      (lambda (f) (lambda (x) (f ((n f) x)))))
+
+    (if (= n 0)
+	zero
+	(add-1 (make-church (- n 1))))
+    )
+#+end_src
+
+验证=church-add= 的正确性：
+#+begin_src scheme
+  (define (church2int n)
+
+    (define (inc x)
+      (+ x 1))
+
+    ((n inc) 0))
+
+  ;;; 
+  (define three (make-church 3))
+  (define four (make-church 4))
+  (church2int (church-add three four)) ; => 7
+
+  ;;; 我很好奇，这么多次函数调用，不用stackoverflow 么？
+  (define a (make-church 230))
+  (define b (make-church 242))
+  (church2int (church-add a b)) ; => 472
+#+end_src
