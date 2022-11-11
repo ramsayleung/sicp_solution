@@ -5,20 +5,21 @@
 #+DATE: 2022-11-11 Fri 14:04
 练习2.8:
 
-两个区间的差应该是两个区间的下界相减，取差的最小值（如两个区间的下界al和bl, 取 =min(al - bl, bl - all)=）; 两个区间的上界相减，取差的最大值:
+算术计算：a - b, 可以看作a + (-b); 同理，区间x - y，可以看作区间x + (-y)；区间由上下界组成，当取负数的时候，上下界会调转的[1, 4], 当取负的时候，会变成[-4, -1]
 
 #+begin_src scheme
+  (define (add-interval x y)
+    (make-interval (+ (lower-bound x) (lower-bound y))
+		   (+ (upper-bound x) (upper-bound y))))
+
   (define (sub-interval x y)
-    (let ((s1 (- (lower-bound x) (lower-bound y)))
-	  (s2 (- (lower-bound y) (lower-bound x)))
-	  (s3 (- (upper-bound x) (upper-bound y)))
-	  (s4 (- (upper-bound y) (upper-bound x))))
-      (make-interval (min s1 s2)
-		     (max s3 s4))))
+    (add-interval x
+		  (make-interval (- (upper-bound y))
+				 (- (lower-bound y)))))
+
 
   ;;;
-
   (define x (make-interval 3 7))
   (define y (make-interval 4 8))
-  (sub-interval x y) ; = (-1 . 1)
+  (sub-interval x y) ; = (-5 . 3)
 #+end_src
