@@ -1,0 +1,25 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-11 Fri 09:56
+
+练习2.7:
+
+取区间的上下界，端点小者为下界，端点大者为上界
+#+begin_src scheme
+  (define (upper-bound interval)
+    (let ((left (car interval))
+	  (right (cdr interval)))
+      (if (> left right)
+	  left
+	  right))
+    )
+
+  (define (lower-bound interval)
+    (let ((left (car interval))
+	  (right (cdr interval)))
+      (if (< left right)
+	  left
+	  right)))
+#+end_src
