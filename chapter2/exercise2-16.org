@@ -1,0 +1,12 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-12 六 21:02
+练习2-16:
+
+为什么等价的代数表达式可能导致不同计算结果？
+
+因为代数表达式在数学上是等价的，但是在计算机系统上，因为实现成本和条件的限制，只能「尽量」拟合代数表达式。
+
+因为计算机底层是二进制组成，对于各种数学定义上的数，如小数，只能通过二进制模拟小数，就不可避免地会存在一定的误差。
