@@ -1,0 +1,21 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-12 六 15:51
+练习2-12:
+
+#+begin_src scheme
+  (define (center i)
+    (/ (+ (lower-bound i) (upper-bound i)) 2))
+
+  (define (make-center-percent center percent)
+    (let ((dis (* center (/ percent 100))))
+      (make-interval (- center dis)
+		     (+ center dis))))
+
+  (define (percent interval)
+    (let ((ub (upper-bound interval))
+	  (center-point (center interval)))
+      (* (/ (- ub center-point) center-point) 100)))
+#+end_src
