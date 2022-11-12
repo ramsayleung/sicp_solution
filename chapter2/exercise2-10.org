@@ -7,7 +7,8 @@
 
 #+begin_src scheme
   (define (make-interval x y)
-    (when (or (< x 0) (< y 0))
+    (when (or (and (< x 0) (> y 0))
+	      (and (> x 0) (< y 0)))
       (error "Invalid interal spanning the zero"))
     (cons x y)
     )
