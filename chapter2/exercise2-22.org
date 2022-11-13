@@ -1,0 +1,62 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-13 日 16:08
+#+begin_src scheme
+  (define (squire a)
+    (* a a))
+
+  (define (square-list items)
+    (define (iter things answer)
+      (if (null? things)
+	  answer
+	  (iter (cdr things)
+		(cons (square (car things))
+		      answer))))
+    (iter items (list)))
+#+end_src
+
+因为这一条语句，所以元素顺序是相反的：
+
+#+begin_src scheme
+  (cons (square (car things))
+	answer)
+
+  (square-list (1 2))
+  ;;; =>
+  (iter (1 2) ())
+  ;;; =>
+  (iter (cdr (1 2))
+	(cons (square (car 1 2))
+	      ()))
+  ;;; =>
+  (iter (2) (1 ()))
+
+  ;;; =>
+  (iter (cdr (2))
+	(cons (square (car 2))
+	      (1 ())))
+  ;;; =>
+  (iter () (4 1 ()))
+#+end_src
+
+从第一个元素开始计算，但是总是把计算结果放到最后。
+
+#+begin_src scheme
+  (define (square a)
+    (* a a))
+
+  (define (square-list items)
+    (define (iter things answer)
+      (if (null? things)
+	  answer
+	  (iter (cdr things)
+		(cons answer (square (car things))))))
+    (iter items (list)))
+#+end_src
+
+因为 =answer= 是从空列表开始迭代的， =(cons answer (square (car things)))= 就会在最开始生成：首个元素是空列表，而非列表首个元素平方的情况：
+#+begin_src scheme
+  ((((() . 1) . 4) . 9) . 16)
+#+end_src
