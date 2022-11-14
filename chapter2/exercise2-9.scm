@@ -22,6 +22,14 @@
 (define (get-interval-width x)
   (/ (- (upper-bound x) (lower-bound x)) 2))
 
+;;; 
 (define a (make-interval 3 9))
 (define b (make-interval 1 5))
 
+(get-interval-width a) ; => 3
+(get-interval-width b) ; => 2
+
+(get-interval-width (add-interval a b)) ; => 5
+(get-interval-width (sub-interval a b)) ; => 5
+(get-interval-width (mul-interval a b)) ; => 21
+(get-interval-width (div-interval a b)) ; => 4.2
