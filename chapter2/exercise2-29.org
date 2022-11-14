@@ -1,0 +1,102 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-14 一 21:31
+练习2-29:
+
+[[file:~/code/scheme/SICP/img/chapter2/exercise-2-29-mobile.png][file:../img/chapter2/exercise-2-29-mobile.png]]
+
+问题a:
+
+#+begin_src scheme
+  (define (make-mobile left right)
+    (list left right))
+
+  (define (make-branch length structure)
+    (list length structure))
+
+  (define (left-branch mobile)
+    (car mobile))
+
+  (define (right-branch mobile)
+    (car (cdr mobile)))
+
+  (define (branch-length branch)
+    (car branch))
+
+  (define (branch-structure branch)
+    (car (cdr branch)))
+#+end_src
+
+问题b:
+
+#+begin_src scheme
+  (define (total-weight mobile)
+    (cond ((null? mobile) 0)
+	  ((not (pair? mobile)) mobile)
+	  (else 
+	   (+ (total-weight (branch-structure (left-branch mobile)))
+	      (total-weight (branch-structure (right-branch mobile)))))))
+
+  ;;; 
+  (define l2 (make-branch 2 3))
+  (define r2 (make-branch 3 4))
+  (define lm2 (make-mobile l2 r2))
+  (total-weight lm2) ; => 7
+
+  (define l1 (make-branch 1 lm2))
+  (define r1 (make-branch 4 7))
+  (define lm1 (make-mobile l1 r1))
+  (total-weight lm1) ; => 14
+#+end_src
+
+问题c:
+
+#+begin_src scheme
+  (define (is-balanced mobile)
+    (cond ((null? mobile) #t)
+	  ((not (pair? mobile))#t)
+	  (else
+	   (and (= (* (total-weight (branch-structure (left-branch mobile))) (branch-length (left-branch mobile)))
+		   (* (total-weight (branch-structure (right-branch mobile))) (branch-length (right-branch mobile))))
+		(is-balanced (branch-structure (left-branch mobile)))
+		(is-balanced (branch-structure (right-branch mobile)))))))
+
+  ;;; 
+  (define l2 (make-branch 2 3))
+  (define r2 (make-branch 3 4))
+  (define lm2 (make-mobile l2 r2))
+  (is-balanced lm2); => #f
+
+  (define l4 (make-branch 2 3))
+  (define r4 (make-branch 3 2))
+  (define lm4 (make-mobile l4 r4))
+  (is-balanced lm4) ; => #t
+
+  (define l3 (make-branch 2 lm4))
+  (define r3 (make-branch 1 10))
+  (define lm3 (make-mobile l3 r3))
+  (is-balanced lm3) ; => #t
+#+end_src
+
+
+问题d:
+
+只需要修改 =right-branch= 和 =branch-structure= 的定义即可：
+
+#+begin_src scheme
+  (define (make-mobile left right)
+    (cons left right))
+
+  (define (make-branch length structure)
+    (cons length structure))
+
+  ;;;
+  (define (right-branch mobile)
+    (cdr mobile))
+
+  (define (branch-structure branch)
+    (cdr branch))
+#+end_src
+
