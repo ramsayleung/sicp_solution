@@ -1,0 +1,8 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-13 日 17:01
+练习2-24:
+
+[[file:~/code/scheme/SICP/img/chapter2/exercise-2-24.png][file:~/code/scheme/SICP/img/chapter2/exercise-2-24.png]]
