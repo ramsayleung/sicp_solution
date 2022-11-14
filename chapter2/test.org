@@ -1,8 +1,0 @@
-#+LATEX_CLASS: ramsay-org-article
-#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
-#+AUTHOR: Ramsay Leung
-#+EMAIL: ramsayleung@gmail.com
-#+DATE: 2022-11-12 六 18:59
-
-When $a \ne 0$, there are two solutions to $(ax^2 + bx + c = 0)$ and they are 
-$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
