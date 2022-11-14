@@ -1,0 +1,40 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-09 三 21:38
+练习2-6:
+
+=zero= 与 =add-1= 的定义：
+#+begin_src scheme
+  (define zero (lambda (f) (lambda (x) x)))
+
+  (define (add-1 n)
+    (lambda (f) (lambda (x) (f ((n f) x)))))
+#+end_src
+
+=one= 就等于将 =(add-1 zero)= 的代换结果：
+#+begin_src scheme
+  (lambda (f) (lambda (x) (f (((lambda (f) (lambda (x) x)) f) x))))
+  ;;; =>
+  (lambda (f) (lambda (x) (f ((lambda (x) x) x))))
+  ;;; =>
+  (lambda (f) (lambda (x) (f x)))
+
+  ;;; one的定义：
+
+  (lambda (f) (lambda (x) (f x)))
+#+end_src
+
+=two= 就等于将=(add-1 one)= 的代换结果：
+#+begin_src scheme
+  (define one (lambda (f) (lambda (x) (f x))))
+
+  ;;; (add-1 one)
+  (lambda (f) (lambda (x) (f (((lambda (f) (lambda (x) (f x))) f) x))))
+  ;;; =>
+  (lambda (f) (lambda (x) (f ((lambda (x) (f x)) x))))
+  ;;; =>
+  (lambda (f) (lambda (x) (f (f x))))
+#+end_src
+
