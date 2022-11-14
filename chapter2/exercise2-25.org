@@ -1,0 +1,25 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-13 日 18:06
+练习2-25:
+
+=(1 3 (5 7) 9)= 取出 =7=
+#+begin_src scheme
+  (define a (list 1 3 (list 5 7) 9))
+  (cdr (car (cdr (cdr a)))); => 7
+#+end_src
+
+=((7))= 取出 =7=
+#+begin_src scheme
+  (define a (list (list 7)))
+  (car (car a)); 7
+#+end_src
+
+=(1 (2 (3 (4 (5 (6 7))))))= 中取出 =7=
+#+begin_src scheme
+  (define a (list 1 (list 2 (list 3 (list 4 (list 5 (list 6 7)))))))
+
+  (car (cdr (car (cdr (car (cdr (car (cdr (car (cdr (car (cdr a)))))))))))); => 7
+#+end_src
