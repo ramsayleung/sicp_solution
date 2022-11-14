@@ -1,0 +1,18 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-12 六 20:57
+
+练习2-15:
+
+我认为Eva Lu Ator 说得对，而从[[ file:exercise2-14.org]] 的结果也可以看出， =par2= 产生出的区间的限界比 =par1= 更紧凑一些：
+
+#+begin_quote
+  (par1 r1 r2); => (0.6000000000000001 . 4.800000000000001)
+  (par2 r1 r2); => (1.2000000000000002 . 2.4000000000000004)
+#+end_quote
+
+从定义上来说，R1和R2都是非准确性的变量，存在误差。而 =par2= 中R1和R2的出现次数更少，直觉推断误差的传递范围也更低，结果也会更准确。
+
+给不出数学证明。
