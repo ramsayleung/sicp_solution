@@ -1,0 +1,28 @@
+练习2-13:
+
+数学证明，这真的是让我这种理科苦手为难阿。
+
+假设某电阻a阻值为a，误差为w，那么有电阻区间A： $A = a \pm w_{a}$
+
+该电阻a的误差百分比为 $P_{a} = \frac{w_{a}}{a}$
+
+同理可得电阻b的阻值区间及误差百分比：
+
+$B = b \pm w_{b} \\ P_{b} = \frac{w_{b}}{b}$
+
+区间A与区间B的相乘结果为C：
+
+$C = AB \\ = [(a - w_{a})(b - w_{b}), (a + w_{a})(b + w_{b})] \\ = [(ab - aw_{b} - bw_{a} + w_{a}w_{b}), (ab + aw_{b} +bw_{a}+w_{a}w_{b})] \\ = [((ab + w_{a}w_{b} )- (aw_{b} + bw_{a}) ), ((ab +w_{a}w_{b}) +( aw_{b} +bw_{a}))] \\ = (ab +w_{a}w_{b}) \pm (aw_{b} + bw_{a})$
+
+C的误差百分比为：
+
+$\frac{aw_{b} + bw_{a}}{ab +w_{a}w_{b}}$
+
+分子分母同时除以 $w_{a}w_{b}$:
+
+$\frac{ \frac{aw_{b}}{w_{a}w_{b}} + \frac{bw_{a}}{w_{a}w_{b}}}{\frac{ab}{w_{a}w_{b}} + \frac{w_{a}w_{b}}{w_{a}w_{b}}} \\=\frac{\frac{a}{w_{a}} + \frac{b}{w_{b}}}{\frac{ab}{w_{a}w_{b}} + 1}
+\\= \frac{\frac{1}{P_{a}} + \frac{1}{P_{b}}}{\frac{1}{P_{a}P_{b}} + 1}$
+
+分子分母再同时乘以 $P_{a}P_{b}$, 可得出C的误差百分比  $P_{c}$ 与 $P_{a}$, $P_{b}$ 的关系为:
+
+$P_{c} = \frac{P_{b} + P_{a}}{1 + P_{a}P_{b}}$
