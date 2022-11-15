@@ -1,0 +1,40 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-15 二 22:41
+练习2-32:
+
+思考 =map= 函数的实现。先不管 =map= 的实名，来看下 =((rest (subsets (cdr s))))= 语句，假设我们已经有完整的 =subsets= 函数，输入为 =(1 2 3)= ，那么：
+#+begin_src scheme
+  ((rest (subsets (2 3))))
+
+  ;;; (subsets (2 3))的结果为，即
+
+  rest = (() (2) (3) (2 3))
+#+end_src
+
+再来看 =(append rest (map <??> rest))=, 这条语句生成的是完整的子集，现在我们有 =rest= ，但是还少了一部分子集，观察发现，少了包含1的子集，即 =asubset = ((1) (1 2) (1 3) (1 2 3))=, rest + asubset 就是 =(1 2 3)= 全部子集。
+
+而 =(map <??> rest)= 以 =rest= 为参数，生成的列表为 =aubset= ，再结合 =(car s)= 来获取1，我们可以写出以下的实现：
+
+#+begin_src scheme
+  (map (lambda (x) (cons (car s))) rest)
+#+end_src
+
+完整实现如下：
+
+#+begin_src scheme
+  (define (subsets s)
+    (if (null? s)
+	(list (list ))
+	(let ((rest (subsets (cdr s))))
+	  (append rest (map (lambda (x) (cons (car s) x)) rest)))))
+
+  ;;; 
+  (subsets (list 1 2 3)); => (() (3) (2) (2 3) (1) (1 3) (1 2) (1 2 3))
+#+end_src
+
+=(list nil)= 语句替换成了 =(list (list))=
+
+不要尝试去展开 =(subsets (cdr s))= ，这样只会脑壳疼，人脑展开递归，又能压几个栈呢。
