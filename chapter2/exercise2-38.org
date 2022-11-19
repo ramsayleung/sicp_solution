@@ -1,0 +1,37 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-19 六 09:49
+练习2-38:
+
+#+begin_src scheme
+  (define (fold-left op initial sequence)
+    (define (iter result rest)
+      (if (null? rest)
+	  result
+	  (iter (op result (car rest))
+		(cdr rest))))
+    (iter initial sequence))
+
+  (define (fold-right op initial sequence)
+    (if (null? sequence)
+	initial
+	(op (car sequence)
+	    (accumulate op initial (cdr sequence)))))
+
+  ;;;
+  (fold-right / 1 (list 1 2 3)); => 3/2
+  (fold-left / 1 (list 1 2 3)); 1/6
+  (fold-right list (list) (list 1 2));=> (1 (2 ()))
+  (fold-left list (list) (list 1 2));=> ((() 1) 2)
+#+end_src
+
+要使 =fold-right= 和 =fold-left= 对任何序列都产生同样的结果，需要 =op= 满足数学定义的交换律和结合律，如加法和乘法:
+
+#+begin_src scheme
+  (fold-right + 0 (list 1 2 3)) ; => 6
+  (fold-left + 0 (list 1 2 3)) ; => 6
+  (fold-right * 1 (list 4 2 3)) ; => 24
+  (fold-left * 1 (list 4 2 3)) ; => 24
+#+end_src
