@@ -36,7 +36,7 @@
 Louis版本的八皇后解法与2-42常规版本的八皇后解法，差别就在于 =queen-cols= 是放在内层循环，还是外层循环，所以关键是 =queen-cols= 函数。
 
 假设 =boarder-size= 为 =N= ，常规版本的解法递归调用了 =N+1= 次 =queen-cols=，而 =queen-cols= 函数调用了 =N= 次 =adjoin-position= 函数。
-假设 =adjoin-position= 函数时间复杂度为常量，那么 =queen-cols= 的时间复杂度为 =O(N)= ，常规解法的时间复杂度为 =O(N * (N +1))= ，即 =O($N^2$)= 。
+假设 =adjoin-position= 函数时间复杂度为常量，那么 =queen-cols= 的时间复杂度为 =O(N)= ，常规解法的时间复杂度为 =O(N * (N +1))= ，即 $O(N^2)$ 。
 
 
 而对于Louis 版本解法，=queen-cols= 每次调用时，都会递归调用N 次 =queen-cols=, 而递归调用 =queen-cols= 时，=queen-cols= 又会递归调用自己，没完没了。这个调用树就是个N 叉树，每个子树有N 个子节点，树的深度为N，所以 =queen-cols= 的时间复杂为 =O(N^N)=.
