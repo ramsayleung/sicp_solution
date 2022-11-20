@@ -41,5 +41,5 @@ Louis版本的八皇后解法与2-42常规版本的八皇后解法，差别就�
 
 而对于Louis 版本解法，=queen-cols= 每次调用时，都会递归调用N 次 =queen-cols=, 而递归调用 =queen-cols= 时，=queen-cols= 又会递归调用自己，没完没了。这个调用树就是个N 叉树，每个子树有N 个子节点，树的深度为N，所以 =queen-cols= 的时间复杂为 =O(N^N)=.
 
-N^N/N^2 = N ^ (N/2), 所以Louis的解法耗时是 $N^\frac{N}{2} * T$
+$\frac{N^N}{N^2}$ = $N ^ \frac{N}{2}$, 所以Louis的解法耗时是 $N^\frac{N}{2} * T$
 
