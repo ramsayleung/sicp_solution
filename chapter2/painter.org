@@ -1,0 +1,48 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-22 二 21:50
+racket的 =sicp= package 包含了一个画图工具，可以画出类似书中的效果
+
+#+begin_src scheme
+  #lang racket
+  (require sicp-pict)
+  (define (flipped-pairs painter)
+    (let ((painter2 (beside painter (flip-vert painter))))
+      (below painter2 painter2)))
+
+  (define (right-split painter n)
+    (if (= n 0)
+	painter
+	(let ((smaller (right-split painter (- n 1))))
+	  (beside painter (below smaller smaller)))))
+
+  (define (up-split painter n)
+    (if (= n 0)
+	painter
+	(let ((smaller (up-split painter (- n 1))))
+	  (below painter (beside smaller smaller)))))
+
+  (define (corner-split painter n)
+    (if (= n 0)
+	painter
+	(let ((up (up-split painter (- n 1)))
+	      (right (right-split painter (- n 1))))
+	  (let ((top-left (beside up up))
+		(bottom-right (below right right))
+		(corner (corner-split painter (- n 1))))
+	    (beside (below painter top-left)
+		    (below bottom-right corner))))))
+
+  (define (square-limit painter n)
+    (let ((quarter (corner-split painter n)))
+      (let ((half (beside (flip-horiz quarter) quarter)))
+	(below (flip-vert half) half))))
+
+  (paint (square-limit einstein 6))
+#+end_src
+
+在 =DrRacket= 的运行效果（只能在DrRacket 运行，在终端无法展示图片）：
+
+[[file:~/code/scheme/SICP/img/chapter2/square-limit-einstein.png][file:square-limit-einstein.png]]
