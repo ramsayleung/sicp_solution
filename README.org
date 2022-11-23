@@ -4,7 +4,7 @@
 #+EMAIL: ramsayleung@gmail.com
 #+DATE: 2022-11-07 一 21:07
 * Structure and Interpretation of Computer Programs
-  《计算机程序的构造和解释》题解
+  《计算机程序的构造和解释》题解，使用标准Guile Scheme 实现（使用Racket时有说明）
   
   #+begin_quote
   If art interprets our dreams, the computer executes them in the guise of programs!
@@ -15,5 +15,7 @@
   #+begin_quote
   We toast the Lisp programmer who pens his thoughts within nests of parentheses.
   #+end_quote
+
+  向以括号为画笔的Lisp程序员举杯，干杯！
   
   
