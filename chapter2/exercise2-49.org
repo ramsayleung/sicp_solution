@@ -1,0 +1,85 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-23 三 21:48
+练习2-49:
+
+1. 画出给定框架边界的画家：
+
+   #+begin_src racket
+     #lang racket
+     (require sicp-pict)
+
+     (define outline (segments->painter
+		      (list (make-segment (make-vect 0 0) (make-vect 1 0))
+			    (make-segment (make-vect 1 0) (make-vect 1 1))
+			    (make-segment (make-vect 1 1) (make-vect 0 1))
+			    (make-segment (make-vect 0 1) (make-vect 0 0)))
+		      ))
+     (paint outline)
+   #+end_src
+
+   [[../img/chapter2/exercise-2-49-outline.png]]
+
+2. 通过连接框架两对角画出一个大叉子的画家：
+   #+begin_src racket
+     #lang racket
+     (require sicp-pict)
+
+     (define cross (segments->painter
+		    (list
+		     (make-segment (make-vect 0 0) (make-vect 1 1))
+		     (make-segment (make-vect 0 1) (make-vect 1 0))
+		     )
+		    ))
+     (paint cross)
+   #+end_src
+
+   [[../img/chapter2/exercise-2-49-cross.png]]
+
+   3. 通过连接框架各边的中点画出一个菱形的画家:
+      #+begin_src racket
+	#lang racket
+	(require sicp-pict)
+
+	(define diamond (segments->painter
+			 (list (make-segment (make-vect 0 0.5) (make-vect 0.5 0))
+			       (make-segment (make-vect 0.5 0) (make-vect 1 0.5))
+			       (make-segment (make-vect 1 0.5) (make-vect 0.5 1))
+			       (make-segment (make-vect 0.5 1) (make-vect 0 0.5)))
+			 ))
+	(paint diamond)
+      #+end_src
+      [[../img/chapter2/exercise2-49-diamond.png]]
+
+4. 画家wave:
+   #+begin_src racket
+     #lang racket
+     (require sicp-pict)
+
+     (define wave (segments->painter
+		   (list (make-segment (make-vect 4/15 0) (make-vect 5/15 7/15))
+			 (make-segment (make-vect 6/15 0) (make-vect 7/15 4/15))
+			 (make-segment (make-vect 7/15 4/15) (make-vect 9/15 0))
+			 (make-segment (make-vect 9/15 7/15) (make-vect 11/15 0))
+			 (make-segment (make-vect 9/15 7/15) (make-vect 15/15 3/15))
+			 (make-segment (make-vect 15/15 5/15) (make-vect 11/15 10/15))
+			 (make-segment (make-vect 11/15 10/15) (make-vect 9/15 10/15))
+			 (make-segment (make-vect 9/15 10/15) (make-vect 10/15 13/15))
+			 (make-segment (make-vect 10/15 13/15) (make-vect 9/15 1))
+			 (make-segment (make-vect 6/15 15/15) (make-vect 5/15 13/15))
+			 (make-segment (make-vect 5/15 13/15) (make-vect 6/15 10/15))
+			 (make-segment(make-vect 6/15 10/15)  (make-vect 4/15 10/15) )
+			 (make-segment(make-vect 2/15 9/15)  (make-vect 4/15 10/15) )
+			 (make-segment(make-vect 2/15 9/15)  (make-vect 0/15 13/15) )
+			 (make-segment (make-vect 4/15 9/15) (make-vect 5/15 7/15))
+			 (make-segment (make-vect 4/15 9/15) (make-vect 2/15 6/15))
+			 (make-segment (make-vect 0/15 9/15) (make-vect 2/15 6/15))
+			 )
+		   ))
+     (paint wave)
+   #+end_src
+
+   使用图2-10左上角图，x坐标切分为15份，y坐标切分为15份，多个点描绘出来的：
+   [[../img/chapter2/exercise-2-49-wave.png]]
