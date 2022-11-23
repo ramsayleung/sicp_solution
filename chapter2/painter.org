@@ -46,3 +46,6 @@ racket的 =sicp= package 包含了一个画图工具，可以画出类似书中�
 在 =DrRacket= 的运行效果（只能在DrRacket 运行，在终端无法展示图片）：
 
 [[file:../img/chapter2/square-limit-einstein.png]]
+
+配合[[file:exercise2-49.org][wave的实现]]，画出来的效果：
+[[../img/chapter2/wave-square-limit.png]]
