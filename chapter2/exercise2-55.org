@@ -1,0 +1,25 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-26 六 20:32
+练习2-55:
+
+#+begin_src scheme
+  (car ''abcracadabra); => quote
+  (cdr ''abcracadabra); => (abcracadabra)
+  (cadr ''abcracadabra); => abcracadabra
+#+end_src
+
+=''abcracadabra=  等价于:
+
+#+begin_src scheme
+  (quote (quote abcracadabra))
+
+  (car (quote (quote abcracadabra))); => quote
+  (cdr (quote (quote abcracadabra))); => (abcracadabra)
+  (cadr (quote (quote abcracadabra))); => abcracadabra
+
+#+end_src
+
+='= 即是 =quote= 的语法糖，类似  =λ= 是 =(lambda)= 的语法糖
