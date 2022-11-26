@@ -1,0 +1,78 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-11-26 六 11:41
+练习2-52:
+
+1. 给练习2.49的基本 =wave= 的画家加入某些线段（例如，加上一个笑脸）
+#+begin_src racket
+  #lang racket
+  (require sicp-pict)
+
+  (define wave (segments->painter
+		(list (make-segment (make-vect 4/15 0) (make-vect 5/15 7/15))
+		      (make-segment (make-vect 6/15 0) (make-vect 7/15 4/15))
+		      (make-segment (make-vect 7/15 4/15) (make-vect 9/15 0))
+		      (make-segment (make-vect 9/15 7/15) (make-vect 11/15 0))
+		      (make-segment (make-vect 9/15 7/15) (make-vect 15/15 3/15))
+		      (make-segment (make-vect 15/15 5/15) (make-vect 11/15 10/15))
+		      (make-segment (make-vect 11/15 10/15) (make-vect 9/15 10/15))
+		      (make-segment (make-vect 9/15 10/15) (make-vect 10/15 13/15))
+		      (make-segment (make-vect 10/15 13/15) (make-vect 9/15 1))
+		      (make-segment (make-vect 6/15 15/15) (make-vect 5/15 13/15))
+
+
+		      (make-segment (make-vect 5/15 13/15) (make-vect 6/15 10/15))
+
+		      (make-segment(make-vect 6/15 10/15)  (make-vect 4/15 10/15) )
+		      (make-segment(make-vect 2/15 9/15)  (make-vect 4/15 10/15) )
+		      (make-segment(make-vect 2/15 9/15)  (make-vect 0/15 13/15) )
+
+		      (make-segment (make-vect 4/15 9/15) (make-vect 5/15 7/15))
+		      (make-segment (make-vect 4/15 9/15) (make-vect 2/15 6/15))
+		      (make-segment (make-vect 0/15 9/15) (make-vect 2/15 6/15))
+		      ;; 笑脸
+		      (make-segment (make-vect 7/15 14/15) (make-vect 7/15 14/15))
+		      (make-segment (make-vect 8/15 14/15) (make-vect 8/15 14/15))
+		      (make-segment (make-vect 6/15 12/15) (make-vect 7/15 11/15))
+		      (make-segment (make-vect 8/15 11/15) (make-vect 7/15 11/15))
+		      (make-segment (make-vect 8/15 11/15) (make-vect 9/15 12/15))
+		      )
+		))
+  (paint wave)
+#+end_src
+
+[[../img/chapter2/exercise-2-52-wave.png]]
+
+2. 修改 =corner-split= 的构造模式（例如，只用 =up-split= 和 =right-split= 的图像的各一个副本，而不是两个）
+#+begin_src scheme
+  (define (corner-split painter n)
+    (if (= n 0)
+	painter
+	(let ((up (up-split painter (- n 1)))
+	      (right (right-split painter (- n 1)))
+	      (corner (corner-split painter (- n 1))))
+	  (let ((top (beside corner up))
+		(down (beside painter right)))
+	    (below top down )))))
+#+end_src
+
+=(paint (corner-split wave 2))= 的结果:
+
+[[../img/chapter2/exercise2-52-b.png]]
+
+3. 修改 =square-limit=, 换一种使用 =square-of-four= 的方式，以另一种不同模式组合起各个角区（例如，你可以让在的Rogers 先生从正方形的每个角向外看）：
+
+#+begin_src scheme
+  (define (square-of-four tl tr bl br)
+    (lambda (painter)
+      (let ((top (beside (tl painter) (tr painter)))
+	    (bottom (beside (bl painter) (br painter))))
+	(below bottom top))))
+
+  (define (square-limit painter n)
+    (let ((combine4 (square-of-four identity flip-horiz 
+				    flip-vert rotate180 )))
+      (combine4 (corner-split painter n))))
+#+end_src
