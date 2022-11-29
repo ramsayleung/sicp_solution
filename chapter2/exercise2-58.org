@@ -5,7 +5,7 @@
 #+DATE: 2022-11-27 日 18:10
 练习2-58:
 
-a:
+a): 表达式中已经加上所有的括号，这种比较标准的方式，我们只需要判断最外层括号的操作符，即可知道是乘法还是加法。
 
 #+begin_src scheme
   (define (variable? x) (symbol? x))
@@ -76,4 +76,81 @@ a:
   ;;;
   (deriv '(x * y) 'x) ; => y
   (deriv '(x + 3) 'x) ; => 1
+#+end_src
+
+b):
+
+对于 =(x + 3 * (x + y + 2))= 这样的中缀表达式，如果我们将其预处理为 =(+ x (* 3 (+ x y 2)))=  这样的前缀表达式，我们就可以不需要修改已有的求导程序了。
+
+想法是这么想，但是不知道怎么写出个中缀转前缀的转换程序，最后是参考  [[http://community.schemewiki.org/?sicp-ex-2.58][Andrey Portnoy]] 的想法实现的:
+
+#+begin_src scheme
+  (define (infix->prefix exp) 
+    (if (not (pair? exp)) 
+	exp 
+	(let ((a (car exp)) 
+	      (op (cadr exp)) 
+	      (b (caddr exp))) 
+	  (list op (infix->prefix a) (infix->prefix b))))) 
+
+  (define (prefix->infix exp) 
+    (if (not (pair? exp)) 
+	exp 
+	(let ((op (car exp)) 
+	      (a (cadr exp)) 
+	      (b (caddr exp))) 
+	  (list (prefix->infix a) op (prefix->infix b)))))
+
+  ;; helpers 
+  (define (two l) 
+    (list (car l) (cadr l))) 
+
+  (define (three l) 
+    (list (car l) (cadr l) (caddr l))) 
+
+  ;; parenthesize w.r.t. ops in the order they are passed to the procedure 
+  (define (parenthesize exp op . ops) 
+    (define (iter head tail) 
+      (cond ((< (length tail) 4) (append head tail)) 
+	    ((eq? (cadr tail) op) 
+	     (iter head 
+		   (cons (three tail) (cdddr tail)))) 
+	    (else 
+	     (iter (append head (two tail)) 
+		   (cddr tail))))) 
+    (let ((first 
+	   (if (not (pair? exp)) 
+	       exp 
+	       (map (lambda (e) (parenthesize e op)) 
+		    (iter '() exp))))) 
+      (if (null? ops) 
+	  first 
+	  (apply parenthesize 
+		 (append (list first (car ops)) 
+			 (cdr ops)))))) 
+
+  (define (free-infix->prefix exp) 
+    (infix->prefix (parenthesize exp '* '+))) 
+
+  (define (free-infix-deriv exp var) 
+    (prefix->infix (deriv (free-infix->prefix exp) var)))
+
+  (define (deriv exp var)
+    (cond ((number? exp) 0)
+	  ((variable? exp)
+	   (if (same-variable? exp var)
+	       1
+	       0))
+	  ((sum? exp)
+	   (make-sum (deriv (addend exp) var)
+		     (deriv (augend exp) var)))
+	  ((product? exp)
+	   (make-sum
+	    (make-product (multiplier exp)
+			  (deriv (multiplicand exp) var))
+	    (make-product (deriv (multiplier exp) var)
+			  (multiplicand exp))))
+
+	  (else
+	   (error "unknown expression type -- DERIV" exp))))
 #+end_src
