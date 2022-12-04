@@ -57,5 +57,5 @@
       '()
       (let ((pair (car pairs)))
 	(adjoin-set (make-leaf (car pair) ; symbol
-			       (cdr pair)) ; weight
+			       (cadr pair)) ; weight
 		    (make-leaf-set (cdr pairs))))))
