@@ -13,9 +13,9 @@ a.
 #+begin_src log
      5
    /   \
-  1     7
+  1     9
    \   / \
-    3 9  11 
+    3 7  11 
 #+end_src
 
-b. 以 2 * O(LogN) 的量级增长，即 =O(LogN)= 
+b. 以 O(N) 的量级增长
