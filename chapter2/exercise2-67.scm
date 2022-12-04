@@ -9,4 +9,4 @@
 
 (define sample-message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
 (decode sample-message sample-tree)	;=> (A D A B B C A)
-
+;;; A - 0  B 10 C 111 D 110
