@@ -1,0 +1,21 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-12-04 日 10:42
+练习2-64:
+
+a.
+
+将一个有序表从中间划分成左右两部分，先调用 =patrial-tree= 对左部分进行树化，取右部分的第一个节点为根节点，再对右部分剩下的列表进行树化；并递归该流程。
+
+=(1 3 5 7 9 1)= 的树化结果为：
+#+begin_src log
+     5
+   /   \
+  1     7
+   \   / \
+    3 9  11 
+#+end_src
+
+b. 以 2 * O(LogN) 的量级增长，即 =O(LogN)= 
