@@ -11,3 +11,12 @@
 
 (define (generate-huffman-tree pairs)
   (successive-merge (make-leaf-set pairs)))
+
+(define sample-tree (generate-huffman-tree '((A 4)
+					     (B 2)
+					     (C 1)
+					     (D 1))))
+
+(define sample-symbol '(A D A B B C A))
+(define sample-bits (encode sample-symbol sample-tree)); => (0 1 1 0 0 1 0 1 0 1 1 1 0)
+(decode sample-bits sample-tree); => (A D A B B C A)

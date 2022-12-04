@@ -1,4 +1,4 @@
-(load "exercise2-67.scm")
+(load "huffman-tree.scm")
 
 (define (element-of-set? x set)
   (not (not (memq x set))))
@@ -22,6 +22,13 @@
 	      (encode (cdr message) tree))))
 
 (define sample-message '(A D A B B C A))
+(define sample-tree
+  (make-code-tree (make-leaf 'A 4)
+		  (make-code-tree
+		   (make-leaf 'B 2)
+		   (make-code-tree (make-leaf 'D 1)
+				   (make-leaf 'C 1)))))
+
 (encode sample-message sample-tree)	; => (0 1 1 0 0 1 0 1 0 1 1 1 0)
 ;;; A - 0  B 10 C 111 D 110
 
