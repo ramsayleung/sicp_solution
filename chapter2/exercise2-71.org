@@ -1,0 +1,14 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-12-05 一 22:41
+练习2-71:
+
+n=5的树的样子：
+
+[[../img/chapter2/exercise2-71.png]]
+
+对于这样的树，编码出现最频繁的符号用1个二进制位即0；最不频繁的符号使用4个二进制位，即1111.
+
+对于n=10的树的样子，就不画了。出现最频繁的符号用1个二进制位，最不频繁的符号使用9位二进制位。
