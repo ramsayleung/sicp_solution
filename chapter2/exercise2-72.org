@@ -1,0 +1,10 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-12-05 一 22:51
+练习2-72:
+
+编码最频繁的符号，只需要搜索一层树叶，而按照2-68的实现，判断某个元素是否在集合的时间复杂度是：O(N), 所以编码最频繁的增长速度为：O(N * 1) = O(N)
+
+编码最不频繁的符号，需要搜索(N-1)层树，判断某个元素是否在集合中的时间复杂度为：O(N), 即编码最不频繁符号的增长速度为O(N * (N -1)) = O(N^2)
