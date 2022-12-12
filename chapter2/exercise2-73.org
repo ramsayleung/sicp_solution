@@ -1,0 +1,11 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2022-12-12 一 22:12
+练习2-73:
+
+a. 将求和和求积的求导过程存储在表格中，通过操作类型获取过程并执行。因为 =number= 和 =same-variable= 不是调用过程，而是直接返回数值。
+
+b.
+
