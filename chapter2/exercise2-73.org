@@ -92,3 +92,5 @@ b. 虽然作者说在3.3.3节，要介绍=put= 和=get= 的实现，但我们也
   (deriv '(+ x 3) 'x) ; => 1
 #+end_src
 
+d. 只需要同步修改下 =install-deriv-package= 的put使用方式， =(put (operator exp) 'deriv 'deriv-product)=
+
