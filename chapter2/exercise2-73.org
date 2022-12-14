@@ -91,6 +91,32 @@ b. 虽然作者说在3.3.3节，要介绍=put= 和=get= 的实现，但我们也
   (deriv '(* x y) 'x) ; => y
   (deriv '(+ x 3) 'x) ; => 1
 #+end_src
+c. :
+
+#+begin_src scheme
+  (define (base s)
+    (cadr s))
+
+  (define (exponent s)
+    (caddr s))
+
+  (define (make-exponentiation base exp)
+    (cond ((=number? exp 0) 1)
+	  ((=number? exp 1) base)
+	  ((and (number? base) (number? exp))
+	   (expt base exp))
+	  (else 
+	   (list '** base exp))))
+
+  (define (deriv-exponentiation exp var)
+    (make-product
+     (exponent exp)
+     (make-product
+      (make-exponentiation (base exp) (- (exponent exp) 1))
+      (deriv (base exp) var))))
+
+  (put 'deriv '** deriv-exponentiation)
+#+end_src
 
 d. 只需要同步修改下 =install-deriv-package= 的put使用方式， =(put (operator exp) 'deriv 'deriv-product)=
 
