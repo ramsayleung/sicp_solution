@@ -7,5 +7,88 @@
 
 a. 将求和和求积的求导过程存储在表格中，通过操作类型获取过程并执行。因为 =number= 和 =same-variable= 不是调用过程，而是直接返回数值。
 
-b.
+b. 虽然作者说在3.3.3节，要介绍=put= 和=get= 的实现，但我们也可以提前想到如何实现=put= 和 =get=，使用 hashtable:
+#+begin_src scheme
+  (define (variable? x) (symbol? x))
+
+  (define (same-variable? v1 v2)
+    (and (variable? v1) (variable? v2) (eq? v1 v2)))
+
+  (define (=number? exp num)
+    (and (number? exp) (= exp num)))
+
+  (define *op-table* (make-hash))
+
+  (define (put op type proc)
+    (hash-set! *op-table* (list op type) proc))
+
+  (define (get op type)
+    (hash-ref! *op-table* (list op type) #f))
+
+  (define (install-deriv-package)
+
+    (define (make-sum a1 a2)
+      (cond ((=number? a1 0) a2)
+	    ((=number? a2 0) a1)
+	    ((and (number? a1) (number? a2))
+	     (+ a1 a2))
+	    (else
+	     (list '+ a1 a2))))
+
+    (define (make-product m1 m2)
+      (cond ((or (=number? m1 0) (=number? m2 0)) 0)
+	    ((=number? m1 1) m2)
+	    ((=number? m2 1) m1)
+	    ((and (number? m1) (number? m2))
+	     (* m1 m2))
+	    (else (list '* m1 m2))))
+
+    (define (sum? x)
+      (and (pair? x) (eq? (cadr x) '+)))
+
+    (define (addend s)
+      (car s))
+
+    (define (augend s)
+      (cadr s))
+
+    (define (product? x)
+      (and (pair? x) (eq? (cadr x) '*)))
+
+    (define (multiplier p)
+      (car p))
+
+    (define (multiplicand p)
+      (cadr p))
+
+    (define (deriv-product exp var)
+      (make-sum
+       (make-product (multiplier exp)
+		     (deriv (multiplicand exp) var))
+       (make-product (deriv (multiplier exp) var)
+		     (multiplicand exp))))
+
+    (define (deriv-sum exp var)
+      (make-sum (deriv (addend exp) var)
+		(deriv (augend exp) var)))
+
+    (put 'deriv '* deriv-product)
+    (put 'deriv '+ deriv-sum)
+    'done
+    )
+
+  (install-deriv-package)
+
+  (define (operator exp) (car exp))
+  (define (operands exp) (cdr exp))
+
+  (define (deriv exp var)
+    (cond ((number? exp) 0)
+	  ((variable? exp) (if (same-variable? exp var)1 0))
+	  (else ((get 'deriv (operator exp)) (operands exp)
+		 var))))
+   ;;;
+  (deriv '(* x y) 'x) ; => y
+  (deriv '(+ x 3) 'x) ; => 1
+#+end_src
 
