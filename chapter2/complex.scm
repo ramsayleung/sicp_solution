@@ -1,15 +1,8 @@
-(define (attach-tag type-tag contents)
-  (cons type-tag contents))
+#lang racket
 
-(define (type-tag datum)
-  (if (pair? datum)
-      (car datum)
-      (error "Bad tagged datum -- TYPE-TAG" datum)))
+(provide real-part imag-part magnitude angle)
 
-(define (contents datum)
-  (if (pair? datum)
-      (cdr datum)
-      (error "Bad tagged datum -- CONTENTS" datum)))
+(require "ch2lib.scm")
 
 (define (rectangular? z)
   (eq (type-tag z) 'rectangular))

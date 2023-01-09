@@ -7,13 +7,6 @@
 
 ;;; a.
 
-(define *op-table* (make-hash))
-
-(define (put op type proc)
-  (hash-set! *op-table* (list op type) proc))
-
-(define (get op type)
-  (hash-ref! *op-table* (list op type) #f))
 
 (define (org1-parse-record record)
   (let ((name (car record))
