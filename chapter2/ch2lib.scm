@@ -1,6 +1,6 @@
 #lang racket
 
-(provide put get attach-tag type-tag contents apply-generic)
+(provide put get attach-tag type-tag contents apply-generic square)
 
 (define (apply-generic op . args)
   (let ((type-tags (map type-tag args)))

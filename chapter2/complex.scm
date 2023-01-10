@@ -1,14 +1,13 @@
 #lang racket
 
-(provide real-part imag-part magnitude angle)
 
 (require "ch2lib.scm")
 
 (define (rectangular? z)
-  (eq (type-tag z) 'rectangular))
+  (eq? (type-tag z) 'rectangular))
 
 (define (polar? z)
-  (eq (type-tag z) 'polar))
+  (eq? (type-tag z) 'polar))
 
 (define (real-part-rectangular z)
   (car z))
@@ -98,3 +97,9 @@
 (define (div-complex z1 z2)
   (make-from-mag-ang (/ (magnitude z1) (magnitude z2))
 		     (- (angle z1) (angle z2))))
+
+
+(module complex-op racket
+  (provide real-part imag-part magnitude angle)
+  (provide make-from-real-imag make-from-mag-ang add-complex sub-complex mul-complex div-complex)
+  )

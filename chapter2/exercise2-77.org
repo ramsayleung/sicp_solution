@@ -1,0 +1,37 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2023-01-10 二 22:53
+练习2-77:
+
+z是图2-24里的对象，即=(cons 'complex (cons 'rectangular (cons 3 4)))=
+
+=(magnitude z)= 即=(apply-generic 'magnitude z)=, 让我们再来看下 =apply-generic= 的定义：
+
+#+begin_src racket
+  (define (apply-generic op . args)
+    (let ((type-tags (map type-tag args))) ; (type-tag z) => 'complex
+      (let ((proc (get op type-tags)))     ; (get 'magnitude 'complex) => #f 未安装针对复数的选择函数
+	(if proc
+	    (apply proc (map contents args))
+	    (error "No method for these types -- APPLY-GENERIC"
+		   (list op type-tags))))))
+#+end_src
+
+当安装 =(put 'magnitude '(complex) magnitude)= 后，=(get op type-tags)= 语句的执行结果就不会为空，就能正确执行。
+
+#+begin_src racket
+  (define (apply-generic op . args)
+    (let ((type-tags (map type-tag args))) ; (type-tag z) => 'complex
+      (let ((proc (get op type-tags)))     ; (get 'magnitude 'complex) => magnitude 过程
+	(if proc
+	    (apply proc (map contents args)) ; (map contents z) => '(rectangular 3 . 4) => (magnitude '(rectangular 3 . 4))
+	    (error "No method for these types -- APPLY-GENERIC"
+		   (list op type-tags))))))
+
+  ;; (magnitude '(rectangular 3 . 4)) => 相当于再调用一回apply-generic
+
+  ;; 即调用两轮apply-generic, 第一轮分派complex的magnitude, 第二轮分派rectangular
+  ;; 的 magnitude
+#+end_src
