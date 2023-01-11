@@ -1,4 +1,5 @@
 #lang racket
+(require "generic_operation.scm")
 
 (define (attach-tag type-tag contents)
   (if (number? contents)
