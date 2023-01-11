@@ -136,6 +136,7 @@
 
   ;; interface to the rest of the system
   (define (tag x) (attach-tag 'rectangular x))
+
   (put 'real-part '(rectangular) real-part)
 
   (put 'imag-part '(rectangular) imag-part)
@@ -168,6 +169,7 @@
   (define (make-from-real-imag x y)
     (cons (sqrt (+ (square x) (square y)))
 	  (atan y x)))
+
   ;; interface to the rest of the system
   (define (tag x)(attach-tag 'polar x))
 
@@ -179,12 +181,17 @@
 
   (put 'angle '(polar) angle)
 
-  (put 'make-from-real-imag 'polar (lambda (x y)(tag (make-from-mag-ang x y))))
+  (put 'make-from-real-imag 'polar (lambda (x y)(tag (make-from-real-imag x y))))
 
   (put 'make-from-mag-ang 'polar (lambda (r a)(tag (make-from-mag-ang r a))))
 
   'done
   )
+
+(define (real-part z) (apply-generic 'real-part z))
+(define (imag-part z) (apply-generic 'imag-part z))
+(define (magnitude z) (apply-generic 'magnitude z))
+(define (angle z)     (apply-generic 'angle z))
 
 (define (install-complex-package)
   ;; internal procedure
@@ -193,7 +200,7 @@
 
   (define (make-from-mag-ang r a)
     ((get 'make-from-mag-ang 'polar)r a))
-  
+
   (define (add-complex z1 z2)
     (make-from-real-imag (+ (real-part z1) (real-part z2))
 			 (+ (imag-part z1) (imag-part z2))))
@@ -221,9 +228,17 @@
 
   (put 'div '(complex complex) (lambda (z1 z2) (tag (div-complex z1 z2))))
 
-  (put 'make-from-real-imag 'complex (lambda (x y) (tag (make-from-mag-ang x y))))
+  (put 'make-from-real-imag 'complex (lambda (x y) (tag (make-from-real-imag x y))))
 
   (put 'make-from-mag-ang 'complex (lambda (r a) (tag (make-from-mag-ang r a))))
+
+  (put 'real-part '(complex) real-part)
+
+  (put 'imag-part '(complex) imag-part)
+
+  (put 'magnitude '(complex) magnitude)
+
+  (put 'angle '(complex) angle)
 
   'done
   )
@@ -248,11 +263,11 @@
 (div (make-scheme-number 10) (make-scheme-number 5)) ;=> (scheme-number . 2)
 
 (add (make-rational 1 2) (make-rational 1 3)) ;=> (rational 5 . 6)
-(sub (make-rational 1 2) (make-rational 1 3)) ;=> (rational 5 . 6)
+(sub (make-rational 1 2) (make-rational 1 3)) ;=> (rational 1 . 6)
 (mul (make-rational 1 2) (make-rational 1 3)) ;=> (rational 1 . 6)
 (div (make-rational 1 2) (make-rational 1 3)) ;=> (rational 3 . 2)
 
-(add (make-complex-from-real-imag 3 4) (make-complex-from-real-imag 3 4)) ;=> (complex rectangular -3.921861725181672 . -4.540814971847569)
-(sub (make-complex-from-real-imag 3 4) (make-complex-from-real-imag 3 4)) ;=> (complex rectangular 0.0 . 0.0)
-(mul (make-complex-from-real-imag 3 4) (make-complex-from-real-imag 3 4)) ;=> (complex polar 9 . 8)
-(div (make-complex-from-real-imag 3 4) (make-complex-from-real-imag 3 4)) ;=> (complex polar 1 . 0)
+(add (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex rectangular -3.921861725181672 . -4.540814971847569)
+(sub (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex rectangular 0.0 . 0.0)
+(mul (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex polar 9 . 8)
+(div (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex polar 1 . 0)
