@@ -1,6 +1,14 @@
 #lang racket
 (require "generic_operation.scm")
 
+(define *coercion-table* (make-hash))
+
+(define (put-coercion type1 type2 proc)
+  (hash-set! *coercion-table* (list type1 type2) proc))
+
+(define (get-coercion type1 type2)
+  (hash-ref! *coercion-table* (list type1 type2) #f))
+
 (define (apply-generic op . args)
   (let ((type-tags (map type-tag args)))
     (let ((proc (get op type-tags)))
