@@ -37,4 +37,7 @@
   (= (* (numer x) (denom y))
      (* (numer y) (denom x))))
 
-(provide equal-rat?)
+(define (zero-rat? x)
+  (= (numer x) 0))
+
+(provide equal-rat? zero-rat?)
