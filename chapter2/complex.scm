@@ -99,7 +99,5 @@
 		     (- (angle z1) (angle z2))))
 
 
-(module complex-op racket
-  (provide real-part imag-part magnitude angle)
-  (provide make-from-real-imag make-from-mag-ang add-complex sub-complex mul-complex div-complex)
-  )
+(provide real-part-rectangular imag-part-rectangular magnitude-polar angle-polar)
+(provide make-from-real-imag make-from-mag-ang add-complex sub-complex mul-complex div-complex)

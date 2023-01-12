@@ -272,5 +272,7 @@
 (mul (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex polar 9 . 8)
 (div (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex polar 1 . 0)
 
-(provide install-scheme-number-package install-complex-package install-rational-package install-rectangular-package install-polar-package)
+(provide install-scheme-number-package install-complex-package install-rational-package install-rectangular-package install-polar-package make-scheme-number make-rational make-complex-from-mag-ang make-complex-from-real-imag)
+(provide attach-tag type-tag contents get put apply-generic)
+(provide magnitude angle real-part imag-part)
 (provide add sub mul div)

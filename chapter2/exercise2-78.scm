@@ -22,3 +22,4 @@
 (sub 10 5); => 5
 (mul 10 5); => 50
 (div 10 5); => 2
+(provide attach-tag type-tag contents)
