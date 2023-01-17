@@ -40,4 +40,4 @@
 (define (zero-rat? x)
   (= (numer x) 0))
 
-(provide equal-rat? zero-rat?)
+(provide equal-rat? zero-rat? numer denom)
