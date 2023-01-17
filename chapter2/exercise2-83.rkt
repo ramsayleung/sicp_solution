@@ -1,5 +1,4 @@
 #lang racket
-(require "coercion.rkt")
 (require "generic_operation.scm")
 (require "section-2-1-1.scm")
 
