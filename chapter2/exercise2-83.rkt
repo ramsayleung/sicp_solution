@@ -52,3 +52,5 @@
 (raise (make-scheme-number 10)); => '(rational 10 . 1)
 (raise (raise (make-scheme-number 10))); => '(real . 10)
 (raise (raise (raise (make-scheme-number 10)))); => '(complex rectangular 10 . 0)
+
+(provide raise install-real-number-package make-real)
