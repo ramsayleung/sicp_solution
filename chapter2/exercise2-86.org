@@ -1,0 +1,27 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2023-01-29 Sun 19:46
+练习2-86:
+处理复数，它们的实部，虚部，模和幅角都可以是常规数，有理数。
+
+参考直角坐标与极坐标表示法，只需要针对常规数，有理数安装对应的过程即可：
+
+#+begin_src racket
+  (put 'real-part '(scheme-number) real-part-scheme-number)
+
+  (put 'imag-part '(scheme-number) imag-part-scheme-number)
+
+  (put 'magnitude '(scheme-number) magnitude-scheme-number)
+
+  (put 'angle '(scheme-number) angle-scheme-number)
+  ;; 至于real-part-scheme-number, imag-part-scheme-number 等过程要如何实现，那就是后续的事情。
+#+end_src
+
+同理，如果需要将 =sine= 和 =cosine= 也定义为常规数和有理数的通用运算，只需要安装对应的过程：
+
+#+begin_src racket
+  (put 'sine '(scheme-number) sine-scheme-number)
+  (put 'cosine '(scheme-number) cosine-scheme-number)
+#+end_src
