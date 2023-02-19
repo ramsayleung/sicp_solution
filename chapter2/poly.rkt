@@ -102,4 +102,4 @@
                     (mul (coeff t1) (coeff t2)))
          (mul-term-by-all-terms t1 (rest-terms L))))))
 
-(provide empty-termlist? =zero? first-term rest-terms coeff term-list)
+(provide empty-termlist? =zero? first-term rest-terms coeff term-list adjoin-term variable make-term)
