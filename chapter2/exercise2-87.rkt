@@ -1,5 +1,6 @@
 #lang racket
 (require "generic_operation.scm")
+(require "ch2lib.scm")
 (require "poly.rkt")
 ;;; 练习2-87
 (define (=zero-poly? poly)

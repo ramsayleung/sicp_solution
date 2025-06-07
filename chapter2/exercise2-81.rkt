@@ -1,6 +1,7 @@
 #lang racket
 (require "coercion.rkt")
 (require "generic_operation.scm")
+(require "ch2lib.scm")
 
 (define (scheme-number->scheme-number n)n)
 (define (complex->complex z) (display "complex->complex") z)

@@ -1,4 +1,5 @@
 #lang racket
+(require "ch2lib.scm")
 (require "generic_operation.scm")
 (require "poly.rkt")
 ;;; 先定义一个求负操作 neg
@@ -29,10 +30,10 @@
     (make-poly (variable p)
                (neg-term (term-list p))))
 
-  (put 'neg '(polynomial) (lambda (x) (tag (neg-poly p))))
+  (put 'neg '(polynomial) (lambda (x) (tag (neg-poly x))))
 
   (define (sub-poly p1 p2)
     (add-poly p1 (neg-poly p2)))
 
-  (put 'sub '(polynomial polynomial) (lambda (x) (tag (sub-poly p1 p2))))
+  (put 'sub '(p1 p2) (lambda (p1 p2) (tag (sub-poly p1 p2))))
   )

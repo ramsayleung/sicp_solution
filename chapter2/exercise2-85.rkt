@@ -1,5 +1,6 @@
 #lang racket
 (require "generic_operation.scm")
+(require "ch2lib.scm")
 (require "exercise2-83.rkt")
 (require "section-2-1-1.scm")
 
@@ -72,14 +73,19 @@
 
 ;;; Install package
 (install-real-number-package)
+(install-scheme-number-package)
+(install-rational-package)
+(install-rectangular-package)
+(install-polar-package)
+(install-complex-package)
 
 (install-complex-project)
 (install-real-project)
 (install-rational-project)
 
 ;;; Test
-(drop (raise (make-scheme-number 10))); '(scheme-number . 10)
-(drop (raise (raise (make-scheme-number 10)))) ; '(rational 10 . 1)
-(drop (raise (raise (raise (make-scheme-number 10))))) ; '(real . 10)
+;; (drop (raise (make-scheme-number 10))); '(scheme-number . 10)
+;; (drop (raise (raise (make-scheme-number 10)))) ; '(rational 10 . 1)
+;; (drop (raise (raise (raise (make-scheme-number 10))))) ; '(real . 10)
 
-(add (make-scheme-number 10) (make-rational 5 1)); '(scheme-number . 15)
+;; (add (make-scheme-number 10) (make-rational 5 1)); '(scheme-number . 15)

@@ -1,3 +1,4 @@
+#lang racket
 (define (for-each proc items)
   (let ((a (map proc items)))
     (= 1 1)))

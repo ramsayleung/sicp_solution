@@ -1,5 +1,6 @@
 #lang racket
 (require "generic_operation.scm")
+(require "ch2lib.scm")
 
 (define *coercion-table* (make-hash))
 

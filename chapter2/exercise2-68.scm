@@ -1,4 +1,5 @@
-(load "huffman-tree.scm")
+#lang racket
+(require "huffman-tree.scm")
 
 (define (element-of-set? x set)
   (not (not (memq x set))))
@@ -32,3 +33,4 @@
 (encode sample-message sample-tree)	; => (0 1 1 0 0 1 0 1 0 1 1 1 0)
 ;;; A - 0  B 10 C 111 D 110
 
+(provide encode)

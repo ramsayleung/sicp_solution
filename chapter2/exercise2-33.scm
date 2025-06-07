@@ -1,8 +1,9 @@
+#lang racket
 (define (accumulate op initial sequence)
   (if (null? sequence)
       initial
       (op (car sequence)
-	  (accumulate op initial (cdr sequence)))))
+          (accumulate op initial (cdr sequence)))))
 
 (define (map p sequence)
   (accumulate (lambda (x y) (cons (p x) y)) (list) sequence))

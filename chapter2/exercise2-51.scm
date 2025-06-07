@@ -8,7 +8,7 @@
                               (make-vect 0 0)
                               (make-vect 1 0)
                               split-point
-                              
+
                               ))
           (paint-down
            (transform-painter painter2

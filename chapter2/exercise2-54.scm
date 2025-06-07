@@ -1,3 +1,4 @@
+#lang racket
 (define (equal? x1 x2)
   (if (not (pair? x1))
       (eq? x1 x2)

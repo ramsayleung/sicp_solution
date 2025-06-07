@@ -1,3 +1,4 @@
+#lang racket
 (define (square a)
   (* a a))
 

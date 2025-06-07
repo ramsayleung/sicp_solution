@@ -1,3 +1,7 @@
+#lang racket
+(require "exercise2-46.scm")
+(require sicp-pict)
+
 (define (transform-painter painter origin corner1 corner2)
   (lambda (frame)
     (let ((m (frame-coord-map frame)))

@@ -1,3 +1,4 @@
+#lang racket
 (define (square-list items)
   (if (null? items)
       (list)

@@ -1,4 +1,5 @@
-(load "huffman-tree.scm")
+#lang racket
+(require "huffman-tree.scm")
 
 (define sample-tree
   (make-code-tree (make-leaf 'A 4)

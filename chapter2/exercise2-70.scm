@@ -1,6 +1,7 @@
-(load "huffman-tree.scm")
-(load "exercise2-68.scm")
-(load "exercise2-69.scm")
+#lang racket
+(require "huffman-tree.scm")
+(require "exercise2-68.scm")
+(require "exercise2-69.scm")
 
 (define rock-tree (generate-huffman-tree '((A 2)
 					   (NA 16)

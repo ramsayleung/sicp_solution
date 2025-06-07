@@ -1,3 +1,4 @@
+#lang racket
 (define (append list1 list2)
   (if (null? list1)
       list2

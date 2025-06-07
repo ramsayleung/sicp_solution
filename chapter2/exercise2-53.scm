@@ -1,7 +1,8 @@
+#lang racket
 (define (memq item x)
   (cond ((null? x) #f)
-	((eq? item (car x))x)
-	(else (memq item (cdr x)))))
+        ((eq? item (car x))x)
+        (else (memq item (cdr x)))))
 
 (list 'a 'b 'c) ; => list(a b c)
 (list (list 'george)); => ((george))

@@ -7,6 +7,9 @@
 
 ;;; a.
 
+#lang racket
+(require "generic_operation.scm")
+(require "ch2lib.scm")
 
 (define (org1-parse-record record)
   (let ((name (car record))

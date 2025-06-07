@@ -1,5 +1,6 @@
 #lang racket
 (require "generic_operation.scm")
+(require "ch2lib.scm")
 (require "section-2-1-1.scm")
 
 (define (install-scheme-number-raise)
@@ -43,6 +44,11 @@
 
 ;;; Install package
 (install-real-number-package)
+(install-scheme-number-package)
+(install-rational-package)
+(install-rectangular-package)
+(install-polar-package)
+(install-complex-package)
 
 (install-scheme-number-raise)
 (install-rational-number-raise)

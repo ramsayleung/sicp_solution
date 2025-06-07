@@ -1,3 +1,5 @@
+#lang racket
+(require sicp-pict)
 (define (split op1 op2)
   (lambda (painter n)
     (if (= n 0)

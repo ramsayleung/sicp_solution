@@ -1,5 +1,6 @@
 #lang racket
 
+(require "ch2lib.scm")
 (require "generic_operation.scm")
 (require "section-2-1-1.scm")
 (require "complex.scm")
@@ -46,6 +47,11 @@
 
 (define (=zero? x) (apply-generic '=zero? x))
 
+(install-scheme-number-package)
+(install-rational-package)
+(install-rectangular-package)
+(install-polar-package)
+(install-complex-package)
 (install-scheme-number-zero?)
 (install-rational-number-zero?)
 (install-rectangular-number-zero?)

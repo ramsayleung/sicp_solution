@@ -1,5 +1,6 @@
-(load "huffman-tree.scm")
-(load "exercise2-68.scm")
+#lang racket
+(require "huffman-tree.scm")
+(require "exercise2-68.scm")
 
 (define (successive-merge leaf-set)
   (if (= (length leaf-set) 1)
@@ -19,4 +20,6 @@
 
 (define sample-symbol '(A D A B B C A))
 (define sample-bits (encode sample-symbol sample-tree)); => (0 1 1 0 0 1 0 1 0 1 1 1 0)
-(decode sample-bits sample-tree); => (A D A B B C A)
+;; (decode sample-bits sample-tree); => (A D A B B C A)
+
+(provide generate-huffman-tree)
