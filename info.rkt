@@ -15,6 +15,8 @@
 (define build-deps '("scribble-lib"  ; For documentation
                      "racket-doc"    ; For documentation
                      "rackunit-lib"  ; For testing
+                     "rackcheck"
+                     "sicp"
                      ))
 
 ;; Test dependencies
