@@ -17,5 +17,7 @@
   #+end_quote
 
   向以括号为画笔的Lisp程序员举杯，干杯！
-  
-  
+* 安装依赖
+  #+begin_src shell
+    raco pkg install --auto --batch # 类似 JavaScript 的 npm install
+  #+end_src
