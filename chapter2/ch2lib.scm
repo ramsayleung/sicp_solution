@@ -1,15 +1,5 @@
 #lang racket
 
-(provide put get attach-tag type-tag contents apply-generic square)
-
-(define (apply-generic op . args)
-  (let ((type-tags (map type-tag args)))
-    (let ((proc (get op type-tags)))
-      (if proc
-	  (apply proc (map contents args))
-	  (error "No method for these types -- APPLY-GENERIC"
-		 (list op type-tags))))))
-
 (define (square x) (* x x))
 
 (define *op-table* (make-hash))
@@ -21,17 +11,30 @@
   (hash-ref! *op-table* (list op type) #f))
 
 (define (attach-tag type-tag contents)
-  (cons type-tag contents))
+  (if (number? contents)
+      contents
+      (cons type-tag contents)))
 
 (define (type-tag datum)
-  (if (pair? datum)
-      (car datum)
-      (error "Bad tagged datum -- TYPE-TAG" datum)))
+  (cond ((number? datum) 'scheme-number)
+        ((pair? datum)(car datum))
+        (else (error "Bad tagged datum -- TYPE-TAG" datum)))
+  )
 
 (define (contents datum)
-  (if (pair? datum)
-      (cdr datum)
-      (error "Bad tagged datum -- CONTENTS" datum)))
+  (cond ((number? datum) datum)
+        ((pair? datum)(cdr datum))
+        (else
+         (error "Bad tagged datum -- CONTENTS" datum))))
+
+(define (apply-generic op . args)
+  (let ((type-tags (map type-tag args)))
+    (let ((proc (get op type-tags)))
+      (if proc
+	  (apply proc (map contents args))
+	  (error "No method for these types -- APPLY-GENERIC"
+		 (list op type-tags))))))
+
 
 (define (install-rectangular-package)
   ;; internal procedures
@@ -102,3 +105,5 @@
 
   'done
   )
+(provide *op-table*)
+(provide put get attach-tag type-tag contents apply-generic square)

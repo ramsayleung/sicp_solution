@@ -1,3 +1,4 @@
+#lang racket
 (define (make-leaf symbol weight)
   (list 'leaf symbol weight))
 
@@ -59,3 +60,5 @@
 	(adjoin-set (make-leaf (car pair) ; symbol
 			       (cadr pair)) ; weight
 		    (make-leaf-set (cdr pairs))))))
+
+(provide leaf? make-code-tree make-leaf decode left-branch right-branch adjoin-set make-leaf-set symbol-leaf weight-leaf weight symbols)

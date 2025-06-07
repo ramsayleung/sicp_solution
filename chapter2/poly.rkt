@@ -1,4 +1,5 @@
 #lang racket
+(require "ch2lib.scm")
 (require "generic_operation.scm")
 
 (define (variable? x) (symbol? x))
@@ -10,26 +11,27 @@
 
 (define (term-list p) (cdr p))
 
+;; representation of poly
+(define (make-poly variable term-list)
+  (cons variable term-list))
+
+(define (add-poly p1 p2)
+  (if (same-variable? (variable p1) (variable p2))
+      (make-poly (variable p1)
+                 (add-terms (term-list p1)
+                            (term-list p2)))
+      (error "Polys not in same var -- ADD-POLY" (list p1 p2))))
+
+(define (mul-poly p1 p2)
+  (if (same-variable? (variable p1) (variable p2))
+      (make-poly (variable p1)
+                 (mul-terms (term-list p1)
+                            (term-list p2)))
+      (error "Polys not in same var -- MUL-POLY" (list p1 p2))))
+
 (define (install-polynomial-package)
   ;; internal procedures
 
-  ;; representation of poly
-  (define (make-poly variable term-list)
-    (cons variable term-list))
-
-  (define (add-poly p1 p2)
-    (if (same-variable? (variable p1) (variable p2))
-        (make-poly (variable p1)
-                   (add-terms (term-list p1)
-                              (term-list p2)))
-        (error "Polys not in same var -- ADD-POLY" (list p1 p2))))
-
-  (define (mul-poly p1 p2)
-    (if (same-variable? (variable p1) (variable p2))
-        (make-poly (variable p1)
-                   (mul-terms (term-list p1)
-                              (term-list p2)))
-        (error "Polys not in same var -- MUL-POLY" (list p1 p2))))
 
   ;; interface to the rest of the system.
   (define (tag p) (attach-tag 'polynomial p))
@@ -102,4 +104,4 @@
                     (mul (coeff t1) (coeff t2)))
          (mul-term-by-all-terms t1 (rest-terms L))))))
 
-(provide empty-termlist? =zero? first-term rest-terms coeff term-list adjoin-term variable make-term)
+(provide empty-termlist? =zero? first-term rest-terms coeff term-list adjoin-term variable make-term order make-poly add-poly)

@@ -1,36 +1,5 @@
 #lang racket
-
-(define (apply-generic op . args)
-  (let ((type-tags (map type-tag args)))
-    (let ((proc (get op type-tags)))
-      (if proc
-	  (apply proc (map contents args))
-	  (error "No method for these types -- APPLY-GENERIC"
-		 (list op type-tags))))))
-
-(define (square x) (* x x))
-
-(define *op-table* (make-hash))
-
-(define (put op type proc)
-  (hash-set! *op-table* (list op type) proc))
-
-(define (get op type)
-  (hash-ref! *op-table* (list op type) #f))
-
-(define (attach-tag type-tag contents)
-  (cons type-tag contents))
-
-(define (type-tag datum)
-  (if (pair? datum)
-      (car datum)
-      (error "Bad tagged datum -- TYPE-TAG" datum)))
-
-(define (contents datum)
-  (if (pair? datum)
-      (cdr datum)
-      (error "Bad tagged datum -- CONTENTS" datum)))
-;;; 
+(require "ch2lib.scm")
 
 (define (add x y) (apply-generic 'add x y))
 (define (sub x y) (apply-generic 'sub x y))
@@ -38,7 +7,6 @@
 (define (div x y) (apply-generic 'div x y))
 
 ;;; regular number
-
 (define (install-scheme-number-package)
   (define (tag x)
     (attach-tag 'scheme-number x))
@@ -76,22 +44,22 @@
 
   (define (add-rat x y)
     (make-rat (+ (* (numer x) (denom y))
-		 (* (numer y) (denom x)))
-	      (* (denom x) (denom y))))
+                 (* (numer y) (denom x)))
+              (* (denom x) (denom y))))
 
   (define (sub-rat x y)
     (make-rat (- (* (numer x) (denom y))
-		 (* (numer y) (denom x)))
-	      (* (denom x) (denom y))))
+                 (* (numer y) (denom x)))
+              (* (denom x) (denom y))))
 
   (define (mul-rat x y)
     (make-rat (* (numer x) (numer y))
-	      (* (denom x) (denom y))))
+              (* (denom x) (denom y))))
 
   (define (div-rat x y)
     (make-rat (* (numer x) (denom y))
-	      (* (denom x) (numer y))))
-  
+              (* (denom x) (numer y))))
+
   ;; interface to rest of the system
   (define (tag x) (attach-tag 'rational x))
 
@@ -126,7 +94,7 @@
 
   (define (magnitude z)
     (sqrt (+ (square (real-part z))
-	     (square (imag-part z)))))
+             (square (imag-part z)))))
 
   (define (angle z)
     (atan (imag-part z) (real-part z)))
@@ -150,7 +118,7 @@
   (put 'make-from-mag-ang 'rectangular (lambda (r a) (tag (make-from-mag-ang r a))))
 
   'done
-  ) 
+  )
 
 (define (install-polar-package)
   ;; internal procedures
@@ -168,7 +136,7 @@
 
   (define (make-from-real-imag x y)
     (cons (sqrt (+ (square x) (square y)))
-	  (atan y x)))
+          (atan y x)))
 
   ;; interface to the rest of the system
   (define (tag x)(attach-tag 'polar x))
@@ -203,19 +171,19 @@
 
   (define (add-complex z1 z2)
     (make-from-real-imag (+ (real-part z1) (real-part z2))
-			 (+ (imag-part z1) (imag-part z2))))
+                         (+ (imag-part z1) (imag-part z2))))
 
   (define (sub-complex z1 z2)
     (make-from-real-imag (- (real-part z1) (real-part z2))
-			 (- (imag-part z1) (imag-part z2))))
+                         (- (imag-part z1) (imag-part z2))))
 
   (define (mul-complex z1 z2)
     (make-from-mag-ang (* (magnitude z1) (magnitude z2))
-		       (+ (angle z1) (angle z2))))
+                       (+ (angle z1) (angle z2))))
 
   (define (div-complex z1 z2)
     (make-from-mag-ang (/ (magnitude z1) (magnitude z2))
-		       (- (angle z1) (angle z2))))
+                       (- (angle z1) (angle z2))))
 
   ;; interface to rest of the system
   (define (tag z) (attach-tag 'complex z))
@@ -250,29 +218,43 @@
   ((get 'make-from-mag-ang 'complex)r a))
 
 ;;; test case
-(install-scheme-number-package)
-(install-complex-package)
-(install-rational-package)
-(install-polar-package)
-(install-rectangular-package)
+;; (install-scheme-number-package)
+;; (install-complex-package)
+;; (install-rational-package)
+;; (install-polar-package)
+;; (install-rectangular-package)
 
 
-(add (make-scheme-number 10) (make-scheme-number 5)) ;=> (scheme-number . 15)
-(sub (make-scheme-number 10) (make-scheme-number 5)) ;=> (scheme-number . 5)
-(mul (make-scheme-number 10) (make-scheme-number 5)) ;=> (scheme-number . 50)
-(div (make-scheme-number 10) (make-scheme-number 5)) ;=> (scheme-number . 2)
+;; (add (make-scheme-number 10) (make-scheme-number 5)) ;=> (scheme-number . 15)
+;; (sub (make-scheme-number 10) (make-scheme-number 5)) ;=> (scheme-number . 5)
+;; (mul (make-scheme-number 10) (make-scheme-number 5)) ;=> (scheme-number . 50)
+;; (div (make-scheme-number 10) (make-scheme-number 5)) ;=> (scheme-number . 2)
 
-(add (make-rational 1 2) (make-rational 1 3)) ;=> (rational 5 . 6)
-(sub (make-rational 1 2) (make-rational 1 3)) ;=> (rational 1 . 6)
-(mul (make-rational 1 2) (make-rational 1 3)) ;=> (rational 1 . 6)
-(div (make-rational 1 2) (make-rational 1 3)) ;=> (rational 3 . 2)
+;; (add (make-rational 1 2) (make-rational 1 3)) ;=> (rational 5 . 6)
+;; (sub (make-rational 1 2) (make-rational 1 3)) ;=> (rational 1 . 6)
+;; (mul (make-rational 1 2) (make-rational 1 3)) ;=> (rational 1 . 6)
+;; (div (make-rational 1 2) (make-rational 1 3)) ;=> (rational 3 . 2)
 
-(add (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex rectangular -3.921861725181672 . -4.540814971847569)
-(sub (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex rectangular 0.0 . 0.0)
-(mul (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex polar 9 . 8)
-(div (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex polar 1 . 0)
+;; (add (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex rectangular -3.921861725181672 . -4.540814971847569)
+;; (sub (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex rectangular 0.0 . 0.0)
+;; (mul (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex polar 9 . 8)
+;; (div (make-complex-from-real-imag 3 4) (make-complex-from-mag-ang 10 1)) ;=> (complex polar 1 . 0)
 
 (provide install-scheme-number-package install-complex-package install-rational-package install-rectangular-package install-polar-package make-scheme-number make-rational make-complex-from-mag-ang make-complex-from-real-imag)
-(provide attach-tag type-tag contents get put apply-generic)
 (provide magnitude angle real-part imag-part)
 (provide add sub mul div)
+
+(module+ test
+  (require rackunit)
+  (require rackunit/text-ui)
+
+  (install-scheme-number-package)
+
+  (define scheme-number-tests
+    (test-suite
+     "Tests for make-shceme-number"
+     (check-equal? (make-scheme-number 10) (attach-tag 'scheme-number 10) "Expected (scheme-number . 10) for 10")
+     ))
+
+  (run-tests scheme-number-tests)
+  )
