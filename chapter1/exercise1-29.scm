@@ -1,3 +1,4 @@
+#lang racket
 (define (inc c) (+ c 1))
 
 (define (cube n)

@@ -1,3 +1,4 @@
+#lang racket
 ;;; a
 (define (product term a next b)
   (if (> a b)

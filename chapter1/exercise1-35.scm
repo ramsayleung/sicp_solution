@@ -1,3 +1,4 @@
+#lang racket
 (define tolerence 0.00001)
 (define (fixed-point f first-guess)
   (define (close-enough? v1 v2)

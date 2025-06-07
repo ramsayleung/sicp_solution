@@ -1,3 +1,6 @@
+#lang racket
+(require "time.rkt")
+
 (define (square n)
   (* n n))
 (define (expmod base exp m)
@@ -21,7 +24,7 @@
   (start-prime-test n (runtime)))
 
 (define (start-prime-test n start-time)
-  (if (fast-prime? n 10)
+  (when (fast-prime? n 10)
       (report-prime n (- (runtime) start-time))))
 
 (define (report-prime n elapsed-time)
@@ -32,8 +35,8 @@
   )
 
 (define (search-iter current last)
-  (if (<= current last) (timed-prime-test current))
-  (if (<= current last) (search-iter (+ current 2)last)))
+  (when (<= current last) (timed-prime-test current))
+  (when (<= current last) (search-iter (+ current 2)last)))
 
 (define (search-for-primes first last)
   (search-iter (if (even? first) (+ first 1)first)

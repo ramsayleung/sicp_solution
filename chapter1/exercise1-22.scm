@@ -1,3 +1,6 @@
+#lang racket
+(require "time.rkt")
+
 (define (prime? n)
   (define (smallest-divisor n)
     (find-divisor n 2))
@@ -15,7 +18,7 @@
   (start-prime-test n (runtime)))
 
 (define (start-prime-test n start-time)
-  (if (prime? n)
+  (when (prime? n)
       (report-prime n (- (runtime) start-time))))
 
 (define (report-prime n elapsed-time)
@@ -26,8 +29,8 @@
   )
 
 (define (search-iter current last)
-  (if (<= current last) (timed-prime-test current))
-  (if (<= current last) (search-iter (+ current 2)last)))
+  (when (<= current last) (timed-prime-test current))
+  (when (<= current last) (search-iter (+ current 2)last)))
 
 (define (search-for-primes first last)
   (search-iter (if (even? first) (+ first 1)first)

@@ -1,8 +1,9 @@
+#lang racket
 (define (count-change amount)
   (cc amount 5))
 (define (cc amount kinds-of-coins)
   (cond ((= amount 0) 1)
-	((or (< mount 0) (= kinds-of-coins 0)0))
+	((or (< amount 0) (= kinds-of-coins 0)0))
 	(else (+ (cc amount
 		     (- kinds-of-coins 1))
 		 (cc (- amount

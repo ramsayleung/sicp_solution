@@ -1,3 +1,4 @@
+#lang racket
 (define (square x) (* x x)) 
 
 (define (miller-rabin-expmod base exp m) 

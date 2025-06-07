@@ -1,3 +1,5 @@
+#lang racket
+(require "time.rkt")
 
 (define (prime? n)
   (define (next next-divisor)
@@ -19,7 +21,7 @@
   (start-prime-test n (runtime)))
 
 (define (start-prime-test n start-time)
-  (if (prime? n)
+  (when (prime? n)
       (report-prime n (- (runtime) start-time))))
 
 (define (report-prime n elapsed-time)

@@ -1,3 +1,4 @@
+#lang racket
 ;;; a
 (define (accumulate combiner null-value term a next b)
   (if (> a b)

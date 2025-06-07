@@ -1,3 +1,4 @@
+#lang racket
 ;;; compose -> f(g(x))
 ;;; repeat -> f(f(f(x))), 即 g(x) 变成 f(x) 这个函数本身 compose(f (compose(f f)))
 (define (compose f g)
