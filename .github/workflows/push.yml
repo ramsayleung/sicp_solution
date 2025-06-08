@@ -20,10 +20,6 @@ jobs:
           version: ${{ matrix.racket-version }}
       - name: Install Package and its Dependencies
         run: |
-          echo "Before installation:"
-          raco pkg show --all
           raco pkg install --auto --batch -j $(nproc)
-          echo "After installation:"
-          raco pkg show --all
       - name: Run Tests
         run: raco test -j $(nproc) -t .
