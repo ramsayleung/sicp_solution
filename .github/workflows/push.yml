@@ -1,6 +1,5 @@
 on:
   - push
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,8 +19,11 @@ jobs:
           variant: ${{ matrix.racket-variant }}
           version: ${{ matrix.racket-version }}
       - name: Install Package and its Dependencies
-        run: raco pkg show --all
-        run: raco pkg install --auto --batch
-        run: raco pkg show --all
+        run: |
+          echo "Before installation:"
+          raco pkg show --all
+          raco pkg install --auto --batch
+          echo "After installation:"
+          raco pkg show --all
       - name: Run Tests
         run: raco test -t .
