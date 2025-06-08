@@ -7,7 +7,7 @@
 
 a. 将求和和求积的求导过程存储在表格中，通过操作类型获取过程并执行。因为 =number= 和 =same-variable= 不是调用过程，而是直接返回数值。
 
-b. 虽然作者说在3.3.3节，要介绍=put= 和=get= 的实现，但我们也可以提前想到如何实现=put= 和 =get=，使用 hashtable:
+b. 虽然作者说在3.3.3节，要介绍 =put= 和 =get= 的实现，但我们也可以提前想到如何实现 =put= 和 =get=，使用 hashtable:
 #+begin_src scheme
   (define (variable? x) (symbol? x))
 

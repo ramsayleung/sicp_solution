@@ -32,7 +32,7 @@
   (intersection-set set1 set2) ; => (1 2 3 3)
 #+end_src
 
-=element-of-set?= 的时间复杂度依然是=O(n)= ， =adjoin-set=的时间度为 =O(1)=, 因为已经不依赖 =element-of-set?= 函数了。
+=element-of-set?= 的时间复杂度依然是 =O(n)= ， =adjoin-set=的时间度为 =O(1)=, 因为已经不依赖 =element-of-set?= 函数了。
 
 =union-set= 的时间复杂度为 =O(n)= ，因为需要遍历set1.
 

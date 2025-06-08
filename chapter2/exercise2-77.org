@@ -19,7 +19,7 @@ z是图2-24里的对象，即=(cons 'complex (cons 'rectangular (cons 3 4)))=
 		   (list op type-tags))))))
 #+end_src
 
-当安装 =(put 'magnitude '(complex) magnitude)= 后，=(get op type-tags)= 语句的执行结果就不会为空，就能正确执行。
+当安装 =(put 'magnitude '(complex) magnitude)= 后， =(get op type-tags)=  语句的执行结果就不会为空，就能正确执行。
 
 #+begin_src racket
   (define (apply-generic op . args)

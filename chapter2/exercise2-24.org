@@ -5,4 +5,4 @@
 #+DATE: 2022-11-13 日 17:01
 练习2-24:
 
-[[file:~/code/scheme/SICP/img/chapter2/exercise-2-24.png][file:~/code/scheme/SICP/img/chapter2/exercise-2-24.png]]
+[[file:../img/chapter2/exercise-2-24.png]]
