@@ -17,6 +17,13 @@
 (define (last-pair items)
   (list-ref items (- (length items) 1)))
 
-;;;
+(module+ test
+  (require rackunit)
+  (require rackunit/text-ui)
 
-(last-pair (list 23 72 149 34)); => 34
+  (define list-ref-tests
+    (test-suite
+     "Tests for list-ref"
+     (check-equal? (last-pair (list 23 72 149 34)) 34)))
+
+  (run-tests list-ref-tests))

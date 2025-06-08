@@ -11,16 +11,25 @@
 (define (same-parity x . y)
   (define (filter-same-parity a items)
     (if (null? items)
-	(list a)
-	(if (same-parity? a (car items))
-	    (append (list a) (filter-same-parity (car items) (cdr items)))
-	    (filter-same-parity a (cdr items)))))
+        (list a)
+        (if (same-parity? a (car items))
+            (append (list a) (filter-same-parity (car items) (cdr items)))
+            (filter-same-parity a (cdr items)))))
 
   (if (null? y)
       (filter-same-parity x (list))
       (filter-same-parity x y))
   )
 
-;;;
-(same-parity 1 2 3 4 5 6 7); => (1 3 5 7)
-(same-parity 2 3 4 5 6 7); => (2 4 6)
+(module+ test
+  (require rackunit)
+  (require rackunit/text-ui)
+
+  (define module-test
+    (test-suite
+     "Tests for same-parity"
+     (check-equal? (same-parity 1 2 3 4 5 6 7) '(1 3 5 7))
+     (check-equal? (same-parity 2 3 4 5 6 7) '(2 4 6))
+     ))
+
+  (run-tests module-test))
