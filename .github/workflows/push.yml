@@ -22,8 +22,8 @@ jobs:
         run: |
           echo "Before installation:"
           raco pkg show --all
-          raco pkg install --auto --batch
+          raco pkg install --auto -j $(nproc) --skip-installed
           echo "After installation:"
           raco pkg show --all
       - name: Run Tests
-        run: raco test -t .
+        run: raco test -j $(nproc) -t .
