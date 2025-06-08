@@ -20,6 +20,8 @@ jobs:
           variant: ${{ matrix.racket-variant }}
           version: ${{ matrix.racket-version }}
       - name: Install Package and its Dependencies
+        run: raco pkg show --all
         run: raco pkg install --auto --batch
+        run: raco pkg show --all
       - name: Run Tests
         run: raco test -t .

@@ -1,2 +1,4 @@
 *~undo-tree~
 /chapter2/compiled/
+*.dep
+*.zo
