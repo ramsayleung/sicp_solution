@@ -21,3 +21,13 @@
   #+begin_src shell
     raco pkg install --auto --batch # 类似 JavaScript 的 npm install
   #+end_src
+* 运行
+  运行所有的习题
+  #+begin_src shell
+    raco test -t .
+  #+end_src
+
+  运行指定的习题:
+  #+begin_src shell
+    raco test chapter1/exercise1-10.scm 
+  #+end_src
