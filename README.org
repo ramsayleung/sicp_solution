@@ -31,3 +31,60 @@
   #+begin_src shell
     raco test chapter1/exercise1-10.scm 
   #+end_src
+* 笔记
+** chapter3
+*** 蒙特卡罗模拟步骤来计算 π 
+    3.1 赋值与局部变量, 155 页
+    #+begin_quote
+    举例来说，6/π^2 是随机选取的两个整数之间没有公因子（也就是说，它们的最大公因子是1）的概率。我们可以利用这一事实做出π的近似值。
+    #+end_quote
+
+    完全读不懂这段话，没理解是怎么可以算出π的近似值的。
+
+    查阅完资料都知道:
+
+    随机选取两个正整数，它们互质（即最大公约数GCD为1）的概率是 $\frac{6}{\pi^2}$ , 所谓的 互质指两个数没有公共因子（如8和15互质，但8和12不互质，因为公约数为4）。
+
+     而这一结论是源自数论中关于 **互质数的密度** 的研究，与黎曼ζ函数相关（难怪我看不懂了）。
+
+     而用蒙特卡罗模拟步骤来计算 ${\pi}$:
+
+     随机实验：重复多次随机选取两个整数，检查它们的GCD是否为1。
+
+     例如：
+        - (3, 5) → GCD=1（计数+1）
+        - (4, 6) → GCD=2（不计数）
+
+     统计概率：
+
+     若总实验次数为 N，其中 k 次GCD=1，则互质概率的估计值为 $\frac{k}{N}$ 
+
+     关联π：
+
+     根据数论结论 $\frac{k}{N} \approx \frac{6}{\pi^2}$，解得 $\pi \approx \sqrt{\frac{6N}{k}}$。
+
+     当直接计算π困难时，可通过概率实验间接逼近。
+
+     这里利用了数论中的概率规律，将π与随机事件联系起来。(对于高数也只是低分飘过的我来说，不知道数论的东西也太正常了)
+
+     #+begin_src racket
+       #lang racket
+
+       (define (estimate-pi trials)
+         (sqrt (/ 6 (monte-carlo trials cesaro-test))))
+
+       (define (cesaro-test)
+         (= (gcd (rand) (rand)) 1))
+
+       (define (monte-carlo trials experiment)
+         (define (iter trials-remaining trial-passed)
+           (cond ((= trials-remaining 0)
+                  (/ trials-passed trials))
+                 ((experiment)
+                  (iter (- trials-remaining 1) (+ trials-passed 1)))
+                 (else
+                  (iter (- trials-remaining 1) trials-passed))))
+         (iter trials 0))
+     #+end_src
+
+     这里的蒙特卡罗实现真的是优雅
