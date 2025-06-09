@@ -17,4 +17,23 @@
       (set! x (rand-update x))
       x)))
 
-(provide rand)
+(define (random-in-range low high)
+  (let ((range (- high low)))
+    (+ low (random range))))
+
+(module+ test
+  (require rackunit)
+  (require rackunit/text-ui)
+
+  (define module-test
+    (test-suite
+     "Tests for random-in-range"
+     (check-true (andmap (lambda (_) (let ((a (random-in-range 1 10)))
+                                       (and (<= a 10)
+                                            (>= a 1))))
+                         (range 3000)))
+     ))
+
+  (run-tests module-test))
+
+(provide rand random-in-range rand-update)

@@ -32,3 +32,5 @@
      (check-exn exn:fail? (lambda () (estimate-pi 0)) "Should throw exception for 0 trials")
      ))
   (run-tests module-test))
+
+(provide monte-carlo)
