@@ -35,3 +35,5 @@
      ))
 
   (run-tests module-test))
+
+(provide make-account)
