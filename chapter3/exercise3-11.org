@@ -1,0 +1,17 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-06-11 Wed 22:59
+
+[[file:../img/chapter3/exercise-3-11.png]]
+
+=acc= 的状态存在 =E1=, =acc2= 的状态存在 =E6= 中.
+
+这两个账户的局部状态是如何保持不同的?
+
+每次调用 =make=account= 都会创建一个新的环境框架，每个环境框架都有自己的 =balance= 绑定
+
+环境结构中的哪些部分被 =acc= 和 =acc2= 共享?
+
+定义在全局环境的 =make-account= 被共享.
