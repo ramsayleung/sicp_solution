@@ -1,0 +1,7 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-06-11 Wed 21:37
+
+[[file:../img/chapter3/exercise-3-10.png]]
