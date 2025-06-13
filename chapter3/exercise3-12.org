@@ -1,0 +1,9 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-06-12 Thu 20:55
+
+第一个 =response= 是 ='(b)= , 第二个 =response= 是 ='(b c d)=
+
+[[file:../img/chapter3/exercise-3-12.png]]
