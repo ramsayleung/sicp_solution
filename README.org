@@ -32,6 +32,55 @@
     raco test chapter1/exercise1-10.scm 
   #+end_src
 * 笔记
+** chapter2
+*** 图形语言
+    racket的 =sicp= package 包含了一个画图工具，可以画出类似书中的效果
+
+    #+begin_src scheme
+      #lang racket
+      (require sicp-pict)
+      (define (flipped-pairs painter)
+        (let ((painter2 (beside painter (flip-vert painter))))
+          (below painter2 painter2)))
+
+      (define (right-split painter n)
+        (if (= n 0)
+            painter
+            (let ((smaller (right-split painter (- n 1))))
+              (beside painter (below smaller smaller)))))
+
+      (define (up-split painter n)
+        (if (= n 0)
+            painter
+            (let ((smaller (up-split painter (- n 1))))
+              (below painter (beside smaller smaller)))))
+
+      (define (corner-split painter n)
+        (if (= n 0)
+            painter
+            (let ((up (up-split painter (- n 1)))
+                  (right (right-split painter (- n 1))))
+              (let ((top-left (beside up up))
+                    (bottom-right (below right right))
+                    (corner (corner-split painter (- n 1))))
+                (beside (below painter top-left)
+                        (below bottom-right corner))))))
+
+      (define (square-limit painter n)
+        (let ((quarter (corner-split painter n)))
+          (let ((half (beside (flip-horiz quarter) quarter)))
+            (below (flip-vert half) half))))
+
+      (paint (square-limit einstein 6))
+    #+end_src
+
+    在 =DrRacket= 的运行效果（只能在DrRacket 运行，在终端无法展示图片）：
+
+    [[file:img/chapter2/square-limit-einstein.png]]
+
+    配合 [[file:chapter2/exercise2-49.org][wave的实现]]，画出来的效果：
+
+[[file:img/chapter2/wave-square-limit.png]]
 ** chapter3
 *** 蒙特卡罗模拟步骤来计算 π 
     3.1 赋值与局部变量, 155 页
@@ -88,3 +137,4 @@
      #+end_src
 
      这里的蒙特卡罗实现真的是优雅
+     
