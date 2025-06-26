@@ -1,0 +1,15 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-06-25 Wed 23:57
+* 打印输出的问题
+  - Scheme 的标准打印不知道队列的特殊结构，仍然是按照序列进行打印
+  - 它简单打印整个序对，因此 =((a b)b)= 中的 =b= 看起来重复，实际上只是 =rear-ptr= 指向最后一个元素
+* 删除后的状态
+  - 当删除所有元素后，=front-ptr= 指向一个空序对 =()=
+  - 但 =rear-ptr= 仍然指向最后一个被删除的元素 =b=, 因为我们只更新了 =front-ptr=
+  - 打印为 =(() b)= 看起来像是非空队列，实际上队列是空的.
+
+[[file:../img/chapter3/exercise-3-21.png]]
+
