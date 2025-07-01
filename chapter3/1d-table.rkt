@@ -1,7 +1,8 @@
 #lang racket
+(require compatibility/mlist)
 
 (define (make-table)
-  (mcons '*table* '()))
+  (mlist '*table*))
 
 (define (assoc key records)
   (cond ((null? records) false)

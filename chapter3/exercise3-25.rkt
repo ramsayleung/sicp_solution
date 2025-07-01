@@ -1,9 +1,10 @@
 #lang racket
+(require compatibility/mlist)
 
 ;;; 实现与一维数组一致，差别在于 key 的表达方式，与原来使用 'a 的字符
 ;;; 变量作为 key 不同，现在使用 '(a b) 列表作为 key
 (define (make-table)
-  (let ((local-table (mcons '*table* '())))
+  (let ((local-table (mlist '*table*)))
     (define (assoc key records)
       (cond ((null? records) false)
             ((equal? key (mcar (mcar records)))

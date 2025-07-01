@@ -1,5 +1,6 @@
 #lang racket
 (require "1d-table.rkt")
+(require compatibility/mlist)
 
 (define (make-table)
   (let ((local-table (mcons '*table* '())))
@@ -20,10 +21,9 @@
                   (set-mcdr! record value)
                   (set-mcdr! subtable (mcons (mcons key-2 value)
                                              (mcdr subtable)))))
-            (set-mcdr! local-table (mcons
-                                    (mcons key-1
-                                           (mcons (mcons key-2 value) '()))
-                                    (mcdr local-table)))))
+            (set-mcdr! local-table (mcons (mlist key-1
+                                                 (mcons key-2 value))
+                                          (mcdr local-table)))))
       'ok)
     (define (dispatch m)
       (cond ((eq? m 'lookup-proc) lookup)
