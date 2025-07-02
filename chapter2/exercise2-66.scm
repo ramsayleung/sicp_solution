@@ -13,7 +13,41 @@
 
 (define (look-up given-key set-of-records)
   (cond ((null? set-of-records) #f)
-        ((equal? given-key (key (entry set-of-records)))
+        ((= given-key (key  set-of-records))
          (entry set-of-records))
-        (else (and (look-up given-key (left-branch set-of-records))
-                   (look-up given-key (right-branch set-of-records))))))
+        ((< given-key (key set-of-records))
+         ;; 查找左子树
+         (look-up given-key (left-branch set-of-records)))
+        (else
+         ;; 查找右子树
+         (look-up given-key (right-branch set-of-records)))))
+
+(module+ test
+  (require rackunit)
+  ;;       5
+  ;;     3   8
+  ;;   1  4 6  9
+  (define tree
+    '(5 "data5"
+        (3 "data3"
+           (1 "data1" () ())
+           (4 "data4" () ()))
+        (8 "data8"
+           (6 "data6" () ())
+           (9 "data9" () ()))))
+
+  (test-case "Test for look-up existing key"
+             (check-equal? (look-up 3 tree) "data3")
+             (check-equal? (entry '(6 "data6" () ())) "data6")
+             )
+  (test-case "Test for non-exist key"
+             (check-false (look-up 100 tree))
+             )
+
+  (test-case "Test for edge case"
+             (define empty-tree '())
+             (check-false (look-up 5 empty-tree))
+             (define root '(5 "root" () ()))
+             (check-equal? (look-up 5 root) "root" )
+             )
+  )
