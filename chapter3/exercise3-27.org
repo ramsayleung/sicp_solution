@@ -1,0 +1,74 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-01 Tue 22:53
+
+使用 Plantuml 的 activity 图会更直观:
+
+#+begin_src plantuml :file ../img/exercise3-27-memory-fib.png :exports results
+  @startuml
+  title 记忆化斐波那契计算 (memo-fib 3)
+
+  start
+
+  :初始化环境;
+  note right
+    memo-fib = (memoize fib)
+    环境E1 = { f: 原始fib函数, table: {} }
+  end note
+
+  partition "计算 (memo-fib 3)" {
+    :检查table中是否有key=3;
+    if (存在?) then (否)
+      :调用(f 3)即原始fib函数;
+      
+      partition "计算 (memo-fib 2)" {
+        :检查table中key=2;
+        if (存在?) then (否)
+          :调用(f 2);
+          
+          partition "计算 (memo-fib 1)" {
+            :检查table中key=1;
+            if (存在?) then (否)
+              :返回1;
+              :存入table[1]=1;
+            endif
+          }
+          
+          partition "计算 (memo-fib 0)" {
+            :检查table中key=0;
+            if (存在?) then (否)
+              :返回0;
+              :存入table[0]=0;
+            endif
+          }
+          
+          :计算1+0=1;
+          :存入table[2]=1;
+        endif
+      }
+      
+      partition "计算 (memo-fib 1)" {
+        :直接从table获取1;
+      }
+      
+      :计算1+1=2;
+      :存入table[3]=2;
+    endif
+  }
+
+  :返回结果2;
+  stop
+
+  @enduml
+#+end_src
+
+#+RESULTS:
+[[file:../img/exercise3-27-memory-fib.png]]
+
+#+begin_quote
+如果简单地将 memo-fib 定义为 (memoize fib) 这一模式还能工作吗？
+#+end_quote
+
+不能，因为 =fib= 递归调用的是 =fib= 而非 =memo-fib=，意味计算结果不会被保存到 =table= 中，时间复杂度还是指数级。
