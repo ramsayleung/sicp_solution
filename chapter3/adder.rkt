@@ -20,6 +20,8 @@
     (or-gate c1 c2 c-out))
   'ok)
 
+(provide half-adder full-adder)
+
 (module+ test
   (require rackunit)
 
