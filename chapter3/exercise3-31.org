@@ -1,0 +1,16 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-15 Tue 20:17
+
+因为电路没有办法表示优先级，以根据德摩根定律(De Morgan's Laws) 为例:
+#+begin_src 
+;;; A OR B = NOT((NOT A) AND (NOT B))
+#+end_src
+
+正确的优先级应该是先执行 =(NOT A)= 与 =(NOT B)=，然后再执行 =AND=, 最后执行 =NOT=；
+
+如果不立即执行，那么在执行 =AND= 的时候，初始值不确定, 也不知道 =(NOT A)= 是否被执行, 输入处于未定义状态。
+
+此外，真实的电路在连接时就会立即产生相应的电平变化
