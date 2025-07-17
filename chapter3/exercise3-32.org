@@ -1,0 +1,9 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-16 Wed 20:30
+
+心须使用 =FIFO= 顺序，是确保信号按实际发生的先后顺序处理，如果 =LIFO=, 那么就会反转处理顺序，破坏因果关系。
+
+总而言之，使用 =FIFO= 是确保电路的正确时序, 保证通过软件对电路建模的正确性.
