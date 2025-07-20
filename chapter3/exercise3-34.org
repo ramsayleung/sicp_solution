@@ -1,0 +1,12 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-19 Sat 22:31
+
+乘法器的工作原理是知道其中两个参数的值时，才能计算出第三个值:
+
+c = a * b
+
+但是这个平方器，知道 =a= 的值的时候可以计算出 =b= 的值（有两个值已知），但是知道 =b= 的值时候，并不能计算出 =a= 的值（两个值未知）
+
