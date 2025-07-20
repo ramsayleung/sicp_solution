@@ -1,0 +1,262 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-20 Sun 16:06
+* 问题a.
+存在 3! = 6 种可能性，Peter 和 Paul 操作顺序并没有关系，但是 Mary 的操作影响最大.
+** 1. Peter -> Paul -> Mary
+   #+begin_src emacs-lisp :exports both
+     (/(- (+ 100 10)  20) 2)
+   #+end_src
+
+   #+RESULTS:
+   : 45
+** 2. Peter -> Mary -> Paul 
+   #+begin_src emacs-lisp :exports both
+     (-(/ (+ 100 10)  2) 20)
+   #+end_src
+
+   #+RESULTS:
+   : 35
+** 3. Paul -> Peter -> Mary
+   #+begin_src emacs-lisp :exports both
+     (/(+ (- 100 20)  10) 2)
+   #+end_src
+
+   #+RESULTS:
+   : 45
+** 4. Paul -> Mary -> Peter
+
+   #+begin_src emacs-lisp :exports both
+     (+(/ (- 100 20)  2) 10)
+   #+end_src
+
+   #+RESULTS:
+   : 50
+** 5. Mary -> Peter -> Paul
+   #+begin_src emacs-lisp :exports both
+     (-(+(/ 100 2)10)20)
+   #+end_src
+
+   #+RESULTS:
+   : 40
+
+** 6. Marry -> Pual -> Peter
+   #+begin_src emacs-lisp :exports both
+     (+(-(/ 100 2)20)20)
+   #+end_src
+
+   #+RESULTS:
+   : 50
+
+* 问题b.
+  情况可能更糟糕，考虑作为每个提款进程一部分的表达式：
+
+  #+begin_src scheme
+    (set! balance (- balance amount))
+  #+end_src
+
+  这一表达式的执行包含三个步骤：
+  1. 取得变量 =balance= 的值
+  2. 计算出新的余额
+  3. 将变量 =balance= 设置为新的值
+
+  如果 Peter 和 Pual 以及 Mery 在提款过程中并发执行这一语句，那么三次操作账户在访问 =balance= 和将它设置为新值的动作就可能交错
+
+  除去问题a 可能性外, 还可能是:
+** 余额110
+   #+begin_src plantuml  :file ../img/chapter3/exercise3-38-1.png :exports results
+     @startuml
+     title Interleaved Transaction Example 1: Final Balance $110
+
+     participant Peter
+     participant Paul
+     participant Mary
+     box "Shared Resource"
+       participant Balance as "Account Balance"
+     end box
+
+     autonumber
+
+     Peter -> "Account Balance": Initial balance = 100
+
+     Peter -> Peter: temp_P = 0 // Local variable for Peter
+     Paul -> Paul: temp_L = 0 // Local variable for Paul
+     Mary -> Mary: temp_M = 0 // Local variable for Mary
+
+     "Account Balance" --> Peter: current balance = 100
+     Peter -> Peter: temp_P = 100 (read)
+
+     "Account Balance" --> Paul: current balance = 100
+     Paul -> Paul: temp_L = 100 (read)
+
+     "Account Balance" --> Mary: current balance = 100
+     Mary -> Mary: temp_M = 100 (read)
+
+     Paul -> Paul: temp_L = 100 - 20 = 80 (calculate)
+     Paul -> "Account Balance": Write 80
+     "Account Balance" -> "Account Balance": balance = 80 (updated by Paul)
+
+     Mary -> Mary: temp_M = 100 / 2 = 50 (calculate)
+     Mary -> "Account Balance": Write 50
+     "Account Balance" -> "Account Balance": balance = 50 (updated by Mary)
+
+     Peter -> Peter: temp_P = 100 + 10 = 110 (calculate) // Peter's calculation uses his original read (100)
+     Peter -> "Account Balance": Write 110
+     "Account Balance" -> "Account Balance": balance = 110 (updated by Peter)
+
+     note right of Peter: Peter's update overwrites Paul's and Mary's changes.
+     @enduml
+   #+end_src
+
+   #+RESULTS:
+   [[file:../img/chapter3/exercise3-38-1.png]]
+
+** 余额60
+   #+begin_src plantuml  :file ../img/chapter3/exercise3-38-2.png :exports results
+     @startuml
+     title Interleaved Transaction Example 2: Final Balance $60
+
+     participant Peter
+     participant Paul
+     participant Mary
+     box "Shared Resource"
+       participant Balance as "Account Balance"
+     end box
+
+     autonumber
+
+     Peter -> "Account Balance": Initial balance = 100
+
+     Peter -> Peter: temp_P = 0
+     Paul -> Paul: temp_L = 0
+     Mary -> Mary: temp_M = 0
+
+     "Account Balance" --> Paul: current balance = 100
+     Paul -> Paul: temp_L = 100 (read)
+
+     "Account Balance" --> Mary: current balance = 100
+     Mary -> Mary: temp_M = 100 (read)
+
+     Paul -> Paul: temp_L = 100 - 20 = 80 (calculate)
+     Paul -> "Account Balance": Write 80
+     "Account Balance" -> "Account Balance": balance = 80 (updated by Paul)
+
+     Mary -> Mary: temp_M = 100 / 2 = 50 (calculate) // Mary's calculation uses her original read (100)
+     Mary -> "Account Balance": Write 50
+     "Account Balance" -> "Account Balance": balance = 50 (updated by Mary)
+
+     note left of Mary: Mary's update overwrites Paul's previous change.
+
+     "Account Balance" --> Peter: current balance = 50
+     Peter -> Peter: temp_P = 50 (read)
+
+     Peter -> Peter: temp_P = 50 + 10 = 60 (calculate)
+     Peter -> "Account Balance": Write 60
+     "Account Balance" -> "Account Balance": balance = 60 (updated by Peter)
+
+     @enduml
+   #+end_src
+
+   #+RESULTS:
+   [[file:../img/chapter3/exercise3-38-2.png]]
+
+** 余额80
+   #+begin_src plantuml  :file ../img/chapter3/exercise3-38-3.png :exports results
+     @startuml
+     title Interleaved Transaction Example 3: Final Balance $80
+
+     participant Peter
+     participant Paul
+     participant Mary
+     box "Shared Resource"
+     participant Balance as "Account Balance"
+     end box
+
+     autonumber
+
+     Peter -> "Account Balance": Initial balance = 100
+
+     Peter -> Peter: temp_P = 0 // Local variable for Peter
+     Paul -> Paul: temp_L = 0 // Local variable for Paul
+     Mary -> Mary: temp_M = 0 // Local variable for Mary
+
+     "Account Balance" --> Peter: current balance = 100
+     Peter -> Peter: temp_P = 100 (read)
+
+     "Account Balance" --> Paul: current balance = 100
+     Paul -> Paul: temp_L = 100 (read)
+
+     "Account Balance" --> Mary: current balance = 100
+     Mary -> Mary: temp_M = 100 (read)
+
+     Paul -> Paul: temp_L = 100 - 20 = 80 (calculate)
+
+     Mary -> Mary: temp_M = 100 / 2 = 50 (calculate)
+     Mary -> "Account Balance": Write 50
+     "Account Balance" -> "Account Balance": balance = 50 (updated by Mary)
+
+     Peter -> Peter: temp_P = 100 + 10 = 110 (calculate) // Peter's calculation uses his original read (100)
+     Peter -> "Account Balance": Write 110
+     "Account Balance" -> "Account Balance": balance = 110 (updated by Peter)
+
+     Paul -> "Account Balance": Write 80
+     "Account Balance" -> "Account Balance": balance = 80 (updated by Paul)
+
+     note right of Paul: Paul's update overwrites Peter's and Mary's changes.
+     @enduml
+   #+end_src
+
+   #+RESULTS:
+   [[file:../img/chapter3/exercise3-38-3.png]]
+
+** 余额30
+   #+begin_src plantuml  :file ../img/chapter3/exercise3-38-4.png :exports results
+     @startuml
+     title Interleaved Transaction Example 4: Final Balance $30
+
+     participant Peter
+     participant Paul
+     participant Mary
+     box "Shared Resource"
+     participant Balance as "Account Balance"
+     end box
+
+     autonumber
+
+     Peter -> "Account Balance": Initial balance = 100
+
+     Peter -> Peter: temp_P = 0 // Local variable for Peter
+     Paul -> Paul: temp_L = 0 // Local variable for Paul
+     Mary -> Mary: temp_M = 0 // Local variable for Mary
+
+     "Account Balance" --> Peter: current balance = 100
+     Peter -> Peter: temp_P = 100 (read)
+
+     "Account Balance" --> Mary: current balance = 100
+     Mary -> Mary: temp_M = 100 (read)
+
+     Mary -> Mary: temp_M = 100 / 2 = 50 (calculate)
+
+     Peter -> Peter: temp_P = 100 + 10 = 110 (calculate) // Peter's calculation uses his original read (100)
+     Peter -> "Account Balance": Write 110
+     "Account Balance" -> "Account Balance": balance = 110 (updated by Peter)
+
+     Mary -> "Account Balance": Write 50
+     "Account Balance" -> "Account Balance": balance = 50 (updated by Mary)
+
+     "Account Balance" --> Paul: current balance = 50
+     Paul -> Paul: temp_L = 50 (read)
+
+     Paul -> Paul: temp_L = 50 - 20 = 30 (calculate)
+
+     Paul -> "Account Balance": Write 30
+     "Account Balance" -> "Account Balance": balance = 30 (updated by Paul)
+
+     note right of Paul: Paul's update overwrites Peter's and Mary's changes.
+     @enduml
+   #+end_src
+
+   #+RESULTS:
+   [[file:../img/chapter3/exercise3-38-4.png]]
