@@ -1,0 +1,21 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-20 Sun 17:51
+#+begin_src scheme
+  (parallel-execute 
+    (lambda () 
+      (set! x ((s (lambda () (* x x))))))
+    (s (lambda () (set! x (+ x 1)))))
+#+end_src
+
+121 和 110 还可能出现
+
+P2 的=(set! x (+ x 1))= 是原子的
+
+P1 的 =(* x x)= 是原子的, 但是 =(set! x )= 不是原子的
+
+- 121: P2将值设置成11 -> P1 计算 11 * 11 -> 121
+- 110: P1 先计算 10 * 10 = 100 -> p2 运行, x+1 = 11 -> p1 将值设计到 100
+
