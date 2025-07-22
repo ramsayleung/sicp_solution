@@ -1,0 +1,12 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-21 Mon 20:23
+两个方案从实现效果来说是等价的，都是并发安全的。
+
+主要的差别是原始实现每次调用创建新序列化过程，Ben的实现会预先创建序列化过程。
+
+相当于Ben的实现是使用了面向对象编程中的单例，只在初始化时创建一次，而原始实现每次调用都创建新序列化过程。
+
+所以Ben的方案内存占用和性能都更优。

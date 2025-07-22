@@ -1,0 +1,9 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-21 Mon 20:17
+
+Ben 的方案并不能解决问题，因为读本身就是原子的，并不需要加锁的；给读加锁引入额外的开销又没有解决问题。
+
+需要加锁的是 =withdraw= 或者 =deposit=, 因为它们是先读，再计算，最后把计算后的值写入，这三个操作需要是原子的.
