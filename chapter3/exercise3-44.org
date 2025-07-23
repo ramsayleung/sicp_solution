@@ -1,0 +1,15 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-23 Wed 00:04
+
+Louis 是不对的，Ben的 =transfer= 方法的确会比 =exchange= 更安全。
+
+因为 =transfer= 的语义简单非常多，=transfer= 只需要把金额x 从账户A转账到账户B；
+
+因为金额x是已知的，即使存在着多个人并发地在许多账户之间转移款项，也不会有问题
+
+而 =exchange= 则是交换账户A与账户B的余额，这意味着需要先读取账户A和账户B的金额，然后计算出待转账的金额，再分别对账户A和账户B提款和汇款。
+
+这意味着转换的金额是强依赖两个账户的余额，先读再写的操作是两步，就无法实现原子性，在写的时候，读的结果就有可能已经过期了。
