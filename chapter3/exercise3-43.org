@@ -1,0 +1,94 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-22 Tue 19:56
+* 序列化执行，并发交换
+  如果这些进程是顺序进行的（run sequentially），那么经过任何次并发交换，这意味着：
+
+  每个交换操作是原子的（完整执行），那么每次交换只是重新排列三个账户的余额，结果必然是三个原始值($10,$20,$30)的某种排列。
+* 非序列化交换
+  #+begin_src plantuml  :file ../img/chapter3/exercise3-43-1.png :exports results
+    @startuml
+    title 非序列化交换
+    participant "Process 1\n(Exchange A-B)" as P1
+    participant "Account A" as A
+    participant "Account B" as B
+    participant "Account C" as C
+    participant "Process 2\n(Exchange A-C)" as P2
+
+    note over A, C: Initial State: A=10, B=20, C=30
+
+    P1 -> A: Read balance
+    A --> P1: 10
+    note right: P1 reads A: 10
+
+    P1 -> B: Read balance
+    B --> P1: 20
+    note right: P1 reads B: 20\nP1 diff: 10-20 = -10
+
+    P2 -> A: Read balance
+    A --> P2: 10
+    note left: P2 reads A: 10
+
+    P2 -> C: Read balance
+    C --> P2: 30
+    note left: P2 reads C: 30\nP2 diff: 10-30 = -20
+
+    P1 -> A: Withdraw -10 (= Deposit 10)
+    A --> P1: Success
+    note over A: A = 10 + 10 = 20
+
+    P2 -> A: Withdraw -20 (= Deposit 20)
+    A --> P2: Success
+    note over A: A = 20 + 20 = 40
+
+    P1 -> B: Deposit -10 (= Withdraw 10)
+    B --> P1: Success
+    note over B: B = 20 - 10 = 10
+
+    P2 -> C: Deposit -20 (= Withdraw 20)
+    C --> P2: Success
+    note over C: C = 30 - 20 = 10
+
+    note over A, C: Final State: A=40, B=10, C=10\n(理应是 {10, 20, 30}的某种组合)
+    note over A, C: 总和是: 40 + 10 + 10 = 60
+    note over A, C: 单个账户余额异常
+
+    @enduml
+  #+end_src
+
+  #+RESULTS:
+  [[file:../img/chapter3/exercise3-43-1.png]]
+* 不做各个账户交易的串行化
+  #+begin_src plantuml  :file ../img/chapter3/exercise3-43-2.png :exports results
+    @startuml
+    title SICP Exercise 3.43: not serialize the transactions on individual accounts
+    participant "Process 1" as P1
+    participant "Account A" as A
+    participant "Process 2" as P2
+
+    note over A: Initial: Account A = 10
+
+    P1 -> A: Read current balance
+    A --> P1: 10
+
+    P2 -> A: Read current balance  
+    A --> P2: 10
+
+    P1 -> P1: 10 - 5 = -5
+
+    P2 -> P2: 10 + 10 = 20
+
+    P1 -> A: Write new balance = -5
+
+    P2 -> A: Write new balance = 20\n(P1的更新丢失了)
+
+    note over A: Final: Account A = 20
+    note over P1, P2: Expected: 10 - 5 + 10 = 15
+    note over P1, P2: Actual: 20
+    @enduml
+  #+end_src
+
+  #+RESULTS:
+  [[file:../img/chapter3/exercise3-43-2.png]]
