@@ -1,0 +1,38 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-23 Wed 22:11
+Louis 的方案会导致死锁
+
+#+begin_src scheme
+  (define (make-account-and-serializer balance)
+    ;; ... withdraw and deposit definitions ...
+    (let ((balance-serializer (make-serializer)))
+      (define (dispatch m)
+        (cond ((eq? m 'withdraw) 
+               (balance-serializer withdraw))    ; serialized!
+              ((eq? m 'deposit) 
+               (balance-serializer deposit))     ; serialized!
+              ((eq? m 'balance) balance)
+              ((eq? m 'serializer) balance-serializer)  ; Also exported
+              (else (error "Unknown request" m))))
+      dispatch))
+#+end_src
+
+再来看下 =serialized-exchange= 的实现:
+
+#+begin_src scheme
+  (define (serialized-exchange account1 account2)
+    (let ((serializer1 (account1 'serializer))
+          (serializer2 (account2 'serializer)))
+      ((serializer1 (serializer2 exchange))
+       account1 account2)))
+#+end_src
+
+假如有两个进程并发交换账户A与账户B:
+- 进程1: =(serialized-exchange A B)=
+- 进程2: =(serialized-exchange B A)=
+- 进程1获取到账户A的锁，尝试获取账户B的锁
+- 进程2获取到账户B的锁，尝试获取账户A的锁
+- 两个进程都想尝试锁定剩下的资源，又不会释放已有的资源，死锁
