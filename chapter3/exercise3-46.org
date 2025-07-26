@@ -1,0 +1,31 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-25 Fri 20:23
+
+#+begin_src plantuml :file ../img/chapter3/exercise3-46.png :exports results
+  @startuml
+  title Exercise 3.46
+  participant "Process 1" as P1
+  participant "Process 2" as P2
+  participant "Mutex A" as A
+
+  note over A: Initial: Mutex A cell = false
+  par
+  P1 -> A: acquire
+  A --> P1: cell = false
+
+  P2 -> A: acquire
+  A --> P2: cell = false
+  end
+  P1 -> A: set-car! cell true
+
+  P2 -> A: set-car! cell true
+
+  note over P1, P2: Both acquired mutex A
+  @enduml
+#+end_src
+
+#+RESULTS:
+[[file:../img/chapter3/exercise3-46.png]]
