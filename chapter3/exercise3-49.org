@@ -1,0 +1,16 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-26 Sat 10:46
+
+exercise3-48 能避免死锁的关键在于，我们提前知道所有需要获取的资源，并且通过 id 给了明确的顺序。
+
+但是如果有需要动态获取的资源，那么就有可能死锁。
+
+比如每个账户都可以有个「子账户」，只有在锁定账户之后，才可以读取子账户（才知道子账户是哪个），如果某些操作需要同时锁定父账户和子账户，那么就可能死锁：
+
+- 进程1: 锁定账户a，发现它的子账户是账户b，尝试锁定账户b
+- 进程2: 锁定账户b，发现它的子账户是账户a，尝试锁定账户a
+
+  死锁
