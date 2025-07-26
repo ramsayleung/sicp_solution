@@ -17,4 +17,14 @@
 (define (clear! cell)
   (box-cas! cell #t #f))
 
-(provide make-mutex)
+(define (make-serializer)
+  (let ((mutex (make-mutex)))
+    (lambda (p)
+      (define (serializer-p . args)
+        (mutex 'acquire)
+        (let ((val (apply p args)))
+          (mutex 'release)
+          val))
+      serializer-p)))
+
+(provide make-mutex make-serializer)
