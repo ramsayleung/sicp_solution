@@ -9,6 +9,8 @@
        (apply stream-map
               (cons proc (map stream-cdr argstreams))))))
 
+(provide (rename-out [stream-map map-stream]))
+
 (module+ test
   (require rackunit)
 
