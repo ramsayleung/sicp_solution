@@ -3,10 +3,10 @@
 (require "exercise3-50.rkt")
 (require "infinite-stream.rkt")
 
-(define (mul-stream s1 s2)
+(define (mul-streams s1 s2)
   (map-stream * s1 s2))
 
-(define factorials (cons-stream 1 (mul-stream (stream-cdr integers) factorials)))
+(define factorials (cons-stream 1 (mul-streams (stream-cdr integers) factorials)))
 
 (module+ test
   (require rackunit)
@@ -14,7 +14,7 @@
   (test-case "Test for mul-stream"
              (define s1 (list-to-stream '(2 3 4 5)))
              (define s2 (list-to-stream '(3 4 5 6)))
-             (define s3 (mul-stream s1 s2))
+             (define s3 (mul-streams s1 s2))
              (check-equal? (stream-ref s3 2) 20)
              (check-equal? (stream-to-list s3 4) '(6 12 20 30))
              )
