@@ -26,7 +26,10 @@
 (define (add-streams s1 s2)
   (map-stream + s1 s2))
 
-(provide add-streams ones integers fibs)
+(define (scale-stream stream factor)
+  (stream-map (lambda (x) (* x factor)) stream))
+
+(provide add-streams scale-stream ones integers fibs)
 
 (module+ test
   (require rackunit)

@@ -1,0 +1,9 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-28 Mon 21:32
+
+使用 memoization 的做法相当于保证 =fib(k)= 每个数 =k= 只会被计算一次，这个就是动态规划的雏形了。
+
+如果不加 memo，时间复杂度就会变成 =2^n=，有大量的数被重复计算了。
