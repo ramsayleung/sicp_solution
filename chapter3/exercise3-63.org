@@ -1,0 +1,35 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-29 Tue 23:44
+
+原始版本:
+
+#+begin_src scheme
+  (define (sqrt-stream x)
+    (let ((guesses (cons-stream 
+                    1.0
+                    (stream-map (lambda (guess)
+                                  (sqrt-improve guess x))
+                                guesses))))
+      guesses))
+#+end_src
+
+Louis 的简单版本:
+
+#+begin_src scheme
+  (define (sqrt-stream x)
+    (cons-stream
+     1.0
+     (stream-map (lambda (guess)
+                   (sqrt-improve guess x))
+                 (sqrt-stream x))))
+#+end_src
+
+两者最大的区别就是原始版本有局部变量 =guesses=, 被定义后就在整个流中共享，这意味着每个值只好被计算一次，所以原始版本的时间复杂度是 =O(N)=
+
+而 Louis 版本每次创建流都需要递归访问 =sqrt-stream=, 就需要每次创建流，也就意味着计算第 =n= 个元素就需要重新计算前 =n-1= 个元素，这与未优化的 =fibs= 数列一样，时间复杂度是 =O(2^N)=
+
+无 =memo-proc= 优化的话，原始版本依然高效，因为都指向同一个流，时间复杂度还是 =O(N)=; 而 Louis 版本效率会更差，还会重复计算，依然是指数级，但是效率更差。
+
