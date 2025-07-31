@@ -6,10 +6,10 @@
   x)
 
 
-;;; 输出 0, 因为 (stream-enumerate-interal 0 10) 会生成一组 0 - 10 的
+;;; 输出 0, 因为 (stream-enumerate-interval 0 10) 会生成一组 0 - 10 的
 ;;; 流, 而 stream-map 会把第一个流应用在 show 函数, 延时未执行的流是
 ;;; 1 - 10
-(define x (stream-map show (stream-enumerate-interal 0 10)))
+(define x (stream-map show (stream-enumerate-interval 0 10)))
 
 ;;; 输出 1 2 3 4 5，因为 stream-ref 需要递归访问 0 - 5, 因为 0 已经被
 ;;; 处理(memo-proc), 所以只会输出 1 - 5

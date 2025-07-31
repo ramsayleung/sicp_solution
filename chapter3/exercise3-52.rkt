@@ -10,7 +10,7 @@
 ;;; 返回一个 1 3 6 10 15 21 28 36 45 55 66 78 91 105 120 136 153 171
 ;;; 190 210 的流, 因为 string-enumerate-interal 会生成 1-20 的流, 然后
 ;;; accum 会累加前面的流, 然后再生成一个新的流
-(define seq (stream-map accum (stream-enumerate-interal 1 20)))
+(define seq (stream-map accum (stream-enumerate-interval 1 20)))
 
 ;;; 返回 6, 10, 28, 36, 66, 78, 120, 136, 190, 210 的流
 (define y (stream-filter even? seq))

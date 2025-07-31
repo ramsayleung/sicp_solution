@@ -65,12 +65,12 @@
                       (stream-filter pred (stream-cdr stream))))
         (else (stream-filter pred (stream-cdr stream)))))
 
-(define (stream-enumerate-interal low high)
+(define (stream-enumerate-interval low high)
   (if (> low high)
       the-empty-stream
       (cons-stream
        low
-       (stream-enumerate-interal (+ low 1) high))))
+       (stream-enumerate-interval (+ low 1) high))))
 
 ;; Testing utility functions
 (define (stream-to-list stream n)
@@ -173,8 +173,8 @@
              (check-equal? results '(5 4 3 2 1))
              )
 
-  (test-case "Test for stream-enumerate-interal"
-             (define s (stream-enumerate-interal 5 10))
+  (test-case "Test for stream-enumerate-interval"
+             (define s (stream-enumerate-interval 5 10))
              (check-equal? (stream-to-list s 10) '(5 6 7 8 9 10))
              )
   )
