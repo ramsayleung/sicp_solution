@@ -1,0 +1,19 @@
+#+LATEX_CLASS: ramsay-org-article
+#+LATEX_CLASS_OPTIONS: [oneside,A4paper,12pt]
+#+AUTHOR: Ramsay Leung
+#+EMAIL: ramsayleung@gmail.com
+#+DATE: 2025-07-30 Wed 21:33
+
+Louis 的方案不可行，因为 Louis 的方案没有使用 =cons-stream= 创建延误执行的 =delayed-object=, 这意味着：
+
+#+begin_src scheme
+  (define (pairs s t)
+    (interleave
+     (stream-map (lambda (x) (list (stream-car s) x))
+                 t)
+     ;; 立即执行，而非延迟执行
+     (pairs (stream-cdr s) (stream-cdr t)
+            )))
+#+end_src
+
+=interleave= 会交替执行两个流，而执行 =pairs= 的时候，因为不是 =delayed-object= 就会马上执行，就会无限递归，直到 =StackOverflow= 
