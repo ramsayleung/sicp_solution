@@ -26,6 +26,7 @@
                     (stream-cdr t))
         (pairs-weighted (stream-cdr s) (stream-cdr t) weight)
         weight))))
+(provide pairs-weighted merge-weighted)
 
 (module+ test
   (require rackunit)
