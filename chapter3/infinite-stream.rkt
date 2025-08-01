@@ -67,13 +67,13 @@
   (test-case "Test for interleave"
              (define s1 (list-to-stream '(1 2 3 4 5)))
              (define s2 (list-to-stream '(6 7 8 9 10)))
-             (check-equal? (stream-to-list (interleave s1 s2) 10) '(1 6 2 7 3 8 4 9 5 10))
+             (check-equal? (stream-take-n (interleave s1 s2) 10) '(1 6 2 7 3 8 4 9 5 10))
              )
 
   (test-case "Test for pairs"
              (define s1 (list-to-stream '(1 2 3)))
              (define s2 (list-to-stream '(1 2 3)))
-             (define int-pairs (stream-to-list (pairs s1 s2) 4))
+             (define int-pairs (stream-take-n (pairs s1 s2) 4))
              (check-equal? int-pairs '((1 1) (1 2) (2 2) (1 3)))
              )
   )

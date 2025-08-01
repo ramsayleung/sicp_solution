@@ -43,7 +43,7 @@
              (define s2 (list-to-stream '(2 -4 5 8 9)))
              (define weight (lambda (x) (abs x)))
              (define s3 (merge-weighted s1 s2 weight))
-             (check-equal? (stream-to-list s3 10) '(1 2 2 3 -4 5 5 7 8 9))
+             (check-equal? (stream-take-n s3 10) '(1 2 2 3 -4 5 5 7 8 9))
              )
 
   (test-case "Test for pairs-weighted with weight = i+j"
@@ -51,7 +51,7 @@
              (define s2 (list-to-stream '(1 2 3)))
              (define weight (lambda (pair) (+ (car pair) (cadr pair))))
              (define s3 (pairs-weighted s1 s2 weight))
-             (check-equal? (stream-to-list s3 10) '((1 1) (1 2) (1 3) (2 2) (2 3) (3 3)))
+             (check-equal? (stream-take-n s3 10) '((1 1) (1 2) (1 3) (2 2) (2 3) (3 3)))
              )
 
   (test-case "Test for pairs-weighted with weight = 2j + 3j + 5ij"
@@ -61,5 +61,5 @@
                                                 (* 3 j)
                                                 (* 5 i j)))))
              (define result (pairs-weighted not-div-by-2-3-5 not-div-by-2-3-5 weight))
-             (check-equal? (stream-to-list result 5) '((1 1) (1 7) (1 11) (1 13) (1 17))))
+             (check-equal? (stream-take-n result 5) '((1 1) (1 7) (1 11) (1 13) (1 17))))
   )

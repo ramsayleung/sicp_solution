@@ -35,7 +35,7 @@
   (test-case "Test for full-pairs"
              (define s1 (list-to-stream '(1 2 3)))
              (define s2 (list-to-stream '(1 2 3)))
-             (define int-pairs (stream-to-list (full-pairs s1 s2) 9))
+             (define int-pairs (stream-take-n (full-pairs s1 s2) 9))
              (check-equal? int-pairs '((1 1) (1 2) (2 2) (2 1) (2 3) (1 3) (3 3) (3 1) (3 2)))
              )
   )

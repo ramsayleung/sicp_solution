@@ -73,12 +73,12 @@
        (stream-enumerate-interval (+ low 1) high))))
 
 ;; Testing utility functions
-(define (stream-to-list stream n)
+(define (stream-take-n stream n)
   (if (or (= n 0)
           (stream-null? stream))
       '()
       (cons (stream-car stream)
-            (stream-to-list (stream-cdr stream)
+            (stream-take-n (stream-cdr stream)
                             (- n 1)))))
 (define (list-to-stream lst)
   (if (null? lst)
@@ -152,13 +152,13 @@
   (test-case "Test for stream-map"
              (define s3 (list-to-stream '(1 2 3 4 5)))
              (define squared (stream-map (lambda (x) (* x x)) s3))
-             (check-equal? (stream-to-list squared 5) '(1 4 9 16 25))
+             (check-equal? (stream-take-n squared 5) '(1 4 9 16 25))
              )
 
   (test-case "Test for stream-filter"
              (define s3 (list-to-stream '(1 2 3 4 5)))
              (define even (stream-filter even? s3))
-             (check-equal? (stream-to-list even 5) '(2 4))
+             (check-equal? (stream-take-n even 5) '(2 4))
              )
 
   (test-case "Test for stream-for-each"
@@ -175,6 +175,6 @@
 
   (test-case "Test for stream-enumerate-interval"
              (define s (stream-enumerate-interval 5 10))
-             (check-equal? (stream-to-list s 10) '(5 6 7 8 9 10))
+             (check-equal? (stream-take-n s 10) '(5 6 7 8 9 10))
              )
   )

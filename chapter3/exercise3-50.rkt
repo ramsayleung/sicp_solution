@@ -18,13 +18,13 @@
              (define s1 (list-to-stream '(1 2 3 4)))
              (define s2 (list-to-stream '(10 20 30 40)))
              (define added (stream-map + s1 s2))
-             (check-equal? (stream-to-list added 4) '(11 22 33 44))
+             (check-equal? (stream-take-n added 4) '(11 22 33 44))
              )
 
   (test-case "Test for different length streams(stop at shortest)"
              (define s1 (list-to-stream '(1 2)))
              (define s2 (list-to-stream '(10 20 30 40)))
              (define added (stream-map + s1 s2))
-             (check-equal? (stream-to-list added 4) '(11 22))
+             (check-equal? (stream-take-n added 4) '(11 22))
              )
   )

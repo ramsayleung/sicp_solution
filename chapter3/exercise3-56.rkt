@@ -27,9 +27,9 @@
              (define s1 (list-to-stream '(1 2 3 5 7)))
              (define s2 (list-to-stream '(2 4 5 8 9)))
              (define s3 (merge s1 s2))
-             (check-equal? (stream-to-list s3 10) '(1 2 3 4 5 7 8 9))
+             (check-equal? (stream-take-n s3 10) '(1 2 3 4 5 7 8 9))
              )
   (test-case "Test for S"
-             (check-equal? (stream-to-list S 20) '(1 2 3 4 5 6 8 9 10 12 15 16 18 20 24 25 27 30 32 36))
+             (check-equal? (stream-take-n S 20) '(1 2 3 4 5 6 8 9 10 12 15 16 18 20 24 25 27 30 32 36))
              )
   )
