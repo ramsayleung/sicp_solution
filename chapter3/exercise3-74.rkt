@@ -18,7 +18,7 @@
 (provide sign-change-detector make-zero-crossings)
 (define sense-data (list-to-stream '(1 2 1.5 1 0.5 -0.1 -2 -3 -2 -0.5 0.2 3 4)))
 
-(define zero-crossings (map-stream sign-change-detector (stream-cdr sense-data) sense-data))
+(define zero-crossings (map-stream sign-change-detector sense-data (cons-stream 0 sense-data)))
 
 (module+ test
   (require rackunit)
@@ -28,6 +28,6 @@
              (check-equal? (stream-take-n zero-crossings 13) '(0 0 0 0 0 -1 0 0 0 0 1 0 0))
              )
   (test-case "Test for zero-crossings"
-             (check-equal? (stream-take-n zero-crossings 11) '(0 0 0 0 -1 0 0 0 0 1 0))
+             (check-equal? (stream-take-n zero-crossings 13) '(0 0 0 0 0 -1 0 0 0 0 1 0 0))
              )
   )
