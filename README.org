@@ -25,7 +25,7 @@
   习题完成情况:
   - 章节一: 43/46
   - 章节二: 88/97
-  - 章节三: 67/82
+  - 章节三: 68/82
   - 章节四: TODO
   - 章节五: TODO
 * 运行
@@ -144,18 +144,22 @@
      #+end_src
 
      这里的蒙特卡罗实现真的是优雅
-*** 翻译错误
-    第2版，238页，模块化，对象和状态，中文翻译是
-    #+begin_quote
-    练习3.70
-    b) 所有正正数序对 (i,j) 的流，其中要求 i<=j, 而且这里的i或者j可以被2,3或者5整除
-    #+end_quote
+** 翻译错误
+   第2版，238页，模块化，对象和状态，中文翻译是
+   #+begin_quote
+   练习3.70
+   b) 所有正正数序对 (i,j) 的流，其中要求 i<=j, 而且这里的i或者j可以被2,3或者5整除
+   #+end_quote
 
-    原文是:
-    #+begin_quote
-    the stream of all pairs of positive integers ( i , j ) with i ≤ j , where neither i nor j is divisible by 2, 3, or 5,
-    #+end_quote
+   原文是:
+   #+begin_quote
+   the stream of all pairs of positive integers ( i , j ) with i ≤ j , where neither i nor j is divisible by 2, 3, or 5,
+   #+end_quote
 
-    https://sarabander.github.io/sicp/html/3_002e5.xhtml#g_t3_002e5
+   https://sarabander.github.io/sicp/html/3_002e5.xhtml#g_t3_002e5
     
-    i和j不可以被2,3,5整除，翻译成了可以被2,3或者5整除，意思完全相反，真的是服了。
+   i和j不可以被2,3,5整除，翻译成了可以被2,3或者5整除，意思完全相反，真的是服了。
+** 排版错误
+   第2版，240页，模块化，对象和状态
+
+   练习3.74 输入信号流和过零点信号流完全没有对齐
