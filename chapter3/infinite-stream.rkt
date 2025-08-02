@@ -45,7 +45,14 @@
                     (stream-cdr t))
         (pairs (stream-cdr s) (stream-cdr t))))))
 
-(provide add-streams scale-stream ones integers fibs interleave pairs)
+(define (integral integrand initial-value dt)
+  (define int
+    (cons-stream initial-value
+                 (add-streams (scale-stream integrand dt)
+                              int)))
+  int)
+
+(provide add-streams scale-stream ones integers fibs interleave pairs integral)
 
 (module+ test
   (require rackunit)
@@ -75,5 +82,10 @@
              (define s2 (list-to-stream '(1 2 3)))
              (define int-pairs (stream-take-n (pairs s1 s2) 4))
              (check-equal? int-pairs '((1 1) (1 2) (2 2) (1 3)))
+             )
+
+  (test-case "Test for integral"
+             (define result (integral ones 0 0.5))
+             (check-equal? (stream-take-n result 5) '(0 0.5 1.0 1.5 2.0))
              )
   )
