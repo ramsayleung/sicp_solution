@@ -11,4 +11,9 @@
 (define (square-tree tree) (tree-map square tree))
 
 (define x (list 1 (list 2 (list 3 4) 5)))
-(square-tree x); => (1 (4 (9 16) 25))
+(module+ test
+  (require rackunit)
+
+  (test-case "Test for square-tree"
+             (check-equal? (square-tree x) '(1 (4 (9 16) 25))))
+  )
