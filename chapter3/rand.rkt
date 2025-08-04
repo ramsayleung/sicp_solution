@@ -21,6 +21,8 @@
   (let ((range (- high low)))
     (+ low (random range))))
 
+(provide random-init rand-update)
+
 (module+ test
   (require rackunit)
   (require rackunit/text-ui)
