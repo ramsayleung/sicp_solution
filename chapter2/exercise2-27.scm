@@ -10,9 +10,12 @@
   (if (null? items)
       items
       (if (pair? (car items))
-	  (append (deep-reverse (cdr items)) (list (deep-reverse (car items))))
-	  (append (deep-reverse (cdr items)) (list (car items))))))
+          (append (deep-reverse (cdr items)) (list (deep-reverse (car items))))
+          (append (deep-reverse (cdr items)) (list (car items))))))
 
-;;;
-(deep-reverse x); = ((4 3) (2 1))
+(module+ test
+  (require rackunit)
 
+  (test-case "Test for deep-reverse"
+             (check-equal? (deep-reverse x) '((4 3) (2 1))))
+  )
