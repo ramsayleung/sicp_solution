@@ -20,18 +20,19 @@
                            (abs (- y1 y2)))))
     (* (exact->inexact rectangle-area) (monte-carlo trials experiment))))
 
+;; 以(5,7)为圆心，半径为3的圆，以(2,4)和(8,10)作为对角点的矩形包围着
+;; 这个圆, 计算这个圆的面积（假设 π未知），结果应该接近 28.274
+(define (square x)
+  (* x x))
+
+(define (in-circle? x y)
+  (<= (+ (square (- x 5)) (square (- y 7)))
+      (square 3)))
+(provide square in-circle?)
+
 (module+ test
   (require rackunit)
   (require rackunit/text-ui)
-
-  ;; 以(5,7)为圆心，半径为3的圆，以(2,4)和(8,10)作为对角点的矩形包围着
-  ;; 这个圆, 计算这个圆的面积（假设 π未知），结果应该接近 28.274
-  (define (square x)
-    (* x x))
-
-  (define (in-circle? x y)
-    (<= (+ (square (- x 5)) (square (- y 7)))
-        (square 3)))
 
   (define (estimate-area-close? trials tolerance)
     (let ((area-estimate (estimate-integral in-circle? 2 8 4 10 trials)))

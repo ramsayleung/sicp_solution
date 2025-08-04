@@ -57,6 +57,11 @@
   (cons-stream random-init
                (stream-map rand-update random-number-stream)))
 
+(define (random-range-stream low high)
+  (cons-stream (random-in-range low high)
+               (random-range-stream low high))
+  )
+
 (define (map-successive-pairs f s)
   (cons-stream
    (f (stream-car s) (stream-car (stream-cdr s)))
@@ -84,7 +89,7 @@
               (stream-filter (lambda (p) (not (= p 0)))
                              (monte-carlo cesaro-stream 0 0))))
 
-(provide add-streams scale-stream ones integers fibs interleave pairs integral monte-carlo)
+(provide add-streams scale-stream ones integers fibs interleave pairs integral monte-carlo random-range-stream map-successive-pairs)
 
 (module+ test
   (require rackunit)
